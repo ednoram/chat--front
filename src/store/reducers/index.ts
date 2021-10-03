@@ -1,1 +1,1 @@
-export { default as messagesReducer } from "./messages";
+export { default as chatReducer } from "./chat";

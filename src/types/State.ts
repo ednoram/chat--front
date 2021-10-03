@@ -1,6 +1,7 @@
 interface State {
-  messages: {
+  chat: {
     messages: string[];
+    room: string | null;
   };
 }
 

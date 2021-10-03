@@ -1,10 +1,10 @@
 import { createStore, combineReducers } from "@reduxjs/toolkit";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 
-import { messagesReducer } from "./reducers";
+import { chatReducer } from "./reducers";
 
 const reducers = combineReducers({
-  messages: messagesReducer,
+  chat: chatReducer,
 });
 
 const store = createStore(reducers, composeWithDevTools());

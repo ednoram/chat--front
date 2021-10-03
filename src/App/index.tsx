@@ -1,22 +1,22 @@
 import { FC } from "react";
-import { useDispatch } from "react-redux";
+import { Container } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import { Container, Typography } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
 import { theme } from "src/styles";
-import { Chat } from "src/components";
 import { socket } from "src/constants";
-import { addMessage } from "src/store/actions";
+import { ChatContainer } from "src/containers";
+import { addChatMessage } from "src/store/actions";
 
 import useStyles from "./styles";
-
-socket.on("connect_error", (err) => {
-  alert(`Connection error: ${err.message}`);
-});
 
 const App: FC = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
+
+  socket.on("connect_error", (err) => {
+    alert(`Connection error: ${err.message}`);
+  });
 
   socket.on("connect", () => {
     const message = `${socket.id} joined`;
@@ -24,21 +24,13 @@ const App: FC = () => {
   });
 
   socket.on("message", (message: string) => {
-    dispatch(addMessage(message));
+    dispatch(addChatMessage(message));
   });
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="sm" className={styles.container}>
-        <Typography
-          variant="h2"
-          component="h1"
-          color="primary"
-          className={styles.title}
-        >
-          Chat
-        </Typography>
-        <Chat />
+      <Container maxWidth="md" className={styles.container}>
+        <ChatContainer />
       </Container>
     </ThemeProvider>
   );

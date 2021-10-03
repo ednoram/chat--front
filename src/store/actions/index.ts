@@ -1,1 +1,1 @@
-export { addMessage } from "./messages";
+export { addChatMessage, setChatRoom } from "./chat";
