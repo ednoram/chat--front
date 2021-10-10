@@ -1,10 +1,12 @@
-import { useRef, useEffect, ReactElement } from "react";
+import { useRef, useEffect, FC } from "react";
 import { nanoid } from "nanoid";
-import { Box, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { List, ListItemButton } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+import { Box, Typography, Container } from "@material-ui/core";
 
 import { socket } from "src/constants";
+import { useAuthorize } from "src/hooks";
 import { setChatRoom } from "src/store/actions";
 import { selectChatRoom, selectChatMessages } from "src/store/selectors";
 
@@ -13,7 +15,7 @@ import useStyles from "./styles";
 
 const ROOMS = ["Room 1", "Room 2", "Room 3"];
 
-const Chat = (): ReactElement => {
+const Chat: FC = () => {
   const styles = useStyles();
 
   const chatRoom = useSelector(selectChatRoom);
@@ -21,6 +23,8 @@ const Chat = (): ReactElement => {
 
   const dispatch = useDispatch();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useAuthorize();
 
   useEffect(() => {
     socket.emit("room", chatRoom);
@@ -65,8 +69,18 @@ const Chat = (): ReactElement => {
     </div>
   );
 
+  const roomsAndChat = (
+    <div className={styles.rooms_and_chat}>
+      {roomsDiv}
+      <div>
+        {messagesDiv}
+        <Form />
+      </div>
+    </div>
+  );
+
   return (
-    <div>
+    <Container maxWidth="md" className={styles.container}>
       <Typography
         variant="h2"
         component="h1"
@@ -75,14 +89,13 @@ const Chat = (): ReactElement => {
       >
         Chat
       </Typography>
-      <div className={styles.rooms_and_chat}>
-        {roomsDiv}
-        <div>
-          {messagesDiv}
-          <Form />
-        </div>
+      <div>
+        <Link to="/" className={styles.home_link}>
+          ← Home
+        </Link>
       </div>
-    </div>
+      {roomsAndChat}
+    </Container>
   );
 };
 

@@ -3,13 +3,21 @@ import { makeStyles } from "@material-ui/core/styles";
 import { theme } from "src/styles";
 
 const useStyles = makeStyles({
+  container: {
+    margin: "60px auto 110px",
+  },
   title: {
     fontWeight: 700,
     textAlign: "center",
   },
+  home_link: {
+    textDecoration: "none",
+    color: theme.palette.primary.main,
+  },
   rooms_and_chat: {
     gap: "20px",
     display: "grid",
+    marginTop: "16px",
     gridTemplateColumns: "1fr 2fr",
   },
   rooms_div: {

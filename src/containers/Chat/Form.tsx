@@ -1,4 +1,4 @@
-import { useState, ReactElement, FormEvent } from "react";
+import { useState, FC, FormEvent } from "react";
 import { useSelector } from "react-redux";
 import { Box, TextField, Button } from "@material-ui/core";
 
@@ -7,7 +7,7 @@ import { selectChatRoom } from "src/store/selectors";
 
 import useStyles from "./styles";
 
-const Form = (): ReactElement => {
+const Form: FC = () => {
   const [inputValue, setInputValue] = useState("");
   const styles = useStyles();
 
@@ -25,7 +25,7 @@ const Form = (): ReactElement => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Box component="form" onSubmit={handleSubmit}>
       <Box className={styles.form_div}>
         <TextField
           required
@@ -38,11 +38,16 @@ const Form = (): ReactElement => {
           inputProps={{ maxLength: 800 }}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <Button
+          type="submit"
+          color="primary"
+          variant="contained"
+          onClick={handleSubmit}
+        >
           Send
         </Button>
       </Box>
-    </form>
+    </Box>
   );
 };
 
