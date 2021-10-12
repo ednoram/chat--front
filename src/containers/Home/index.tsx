@@ -1,16 +1,19 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Typography, Container, Button } from "@material-ui/core";
+import { Typography, Container, Button, Box } from "@material-ui/core";
 
 import { useAuthorize } from "src/hooks";
 import { logOut } from "src/store/actions/user";
 import { selectUserData } from "src/store/selectors";
 import { CHAT_ROUTE, LOGIN_ROUTE } from "src/constants";
 
+import useStyles from "./styles";
+
 const Home: FC = () => {
-  const user = useSelector(selectUserData);
+  const styles = useStyles();
   const dispatch = useDispatch();
+  const user = useSelector(selectUserData);
 
   useAuthorize();
 
@@ -20,15 +23,30 @@ const Home: FC = () => {
   };
 
   return (
-    <Container maxWidth="md">
-      <Typography variant="h2" component="h1" color="primary">
-        Home Page
+    <Container maxWidth="md" className={styles.container}>
+      <Typography
+        variant="h2"
+        component="h1"
+        color="primary"
+        className={styles.title}
+      >
+        Chat App
       </Typography>
-      <Typography>Username: {user?.username}</Typography>
-      <div>
-        <Link to={CHAT_ROUTE}>Chat</Link>
-      </div>
-      <Button onClick={handleLogout}>Log Out</Button>
+      <Box className={styles.content}>
+        <Typography variant="h4" component="p" color="primary">
+          {user?.username}
+        </Typography>
+        <Box>
+          <Typography variant="h5" component="p">
+            <Link to={CHAT_ROUTE} className={styles.chat_link}>
+              Chat
+            </Link>
+          </Typography>
+        </Box>
+        <Box>
+          <Button onClick={handleLogout}>Log Out</Button>
+        </Box>
+      </Box>
     </Container>
   );
 };

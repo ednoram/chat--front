@@ -1,24 +1,35 @@
 import { useState, FC, FormEvent } from "react";
 import { useSelector } from "react-redux";
+import SendIcon from "@mui/icons-material/Send";
 import { Box, TextField, Button } from "@material-ui/core";
 
+import { IMessage } from "src/types";
 import { socket } from "src/constants";
-import { selectChatRoom } from "src/store/selectors";
+import { selectChatRoom, selectUserData } from "src/store/selectors";
 
 import useStyles from "./styles";
 
 const Form: FC = () => {
   const [inputValue, setInputValue] = useState("");
-  const styles = useStyles();
 
+  const styles = useStyles();
+  const user = useSelector(selectUserData);
   const chatRoom = useSelector(selectChatRoom);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    const message = inputValue.trim();
+    if (!user) return;
 
-    if (message) {
+    const { username, _id } = user;
+
+    const message: IMessage = {
+      date: new Date(),
+      user: { username, _id },
+      text: inputValue.trim(),
+    };
+
+    if (message.text && message.user.username) {
       socket.emit("message", message, chatRoom);
       setInputValue("");
     }
@@ -43,8 +54,9 @@ const Form: FC = () => {
           color="primary"
           variant="contained"
           onClick={handleSubmit}
+          aria-label="send message"
         >
-          Send
+          <SendIcon aria-label="send icon" />
         </Button>
       </Box>
     </Box>

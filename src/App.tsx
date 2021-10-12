@@ -11,6 +11,7 @@ import {
   NotFoundContainer,
 } from "src/containers";
 import { theme } from "src/styles";
+import { IMessage } from "src/types";
 import { HelmetLayout } from "src/components";
 import { addChatMessage, logInWithToken } from "src/store/actions";
 import { CHAT_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, socket } from "src/constants";
@@ -27,7 +28,7 @@ const App: FC = () => {
     socket.emit("message", message);
   });
 
-  socket.on("message", (message: string) => {
+  socket.on("message", (message: IMessage) => {
     dispatch(addChatMessage(message));
   });
 

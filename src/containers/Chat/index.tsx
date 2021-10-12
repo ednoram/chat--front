@@ -4,11 +4,16 @@ import { Link } from "react-router-dom";
 import { List, ListItemButton } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Typography, Container } from "@material-ui/core";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
+import {
+  selectChatRoom,
+  selectUserData,
+  selectChatMessages,
+} from "src/store/selectors";
 import { socket } from "src/constants";
 import { useAuthorize } from "src/hooks";
 import { setChatRoom } from "src/store/actions";
-import { selectChatRoom, selectChatMessages } from "src/store/selectors";
 
 import Form from "./Form";
 import useStyles from "./styles";
@@ -18,6 +23,7 @@ const ROOMS = ["Room 1", "Room 2", "Room 3"];
 const Chat: FC = () => {
   const styles = useStyles();
 
+  const user = useSelector(selectUserData);
   const chatRoom = useSelector(selectChatRoom);
   const messages = useSelector(selectChatMessages);
 
@@ -38,12 +44,38 @@ const Chat: FC = () => {
     dispatch(setChatRoom(ROOMS[0]));
   }, []);
 
+  const getMessageDate = (date: Date) =>
+    new Date(date).toLocaleTimeString("en", {
+      timeStyle: "short",
+    });
+
   const messagesDiv = (
     <div className={styles.messages_div}>
       {messages &&
         messages.map((message) => (
-          <Box key={nanoid()} className={styles.message_div}>
-            <Typography>{message}</Typography>
+          <Box
+            key={nanoid()}
+            className={[
+              styles.message_div,
+              message.user._id === user?._id ? styles.message_div_own : "",
+            ].join(" ")}
+          >
+            <Typography
+              className={[
+                styles.message_username,
+                message.user._id === user?._id
+                  ? styles.message_username_own
+                  : "",
+              ].join(" ")}
+            >
+              {message.user.username}
+            </Typography>
+            <Typography className={styles.message_text}>
+              {message.text}
+            </Typography>
+            <Typography className={styles.message_time}>
+              {getMessageDate(message?.date)}
+            </Typography>
           </Box>
         ))}
       <div ref={messagesEndRef} />
@@ -89,11 +121,11 @@ const Chat: FC = () => {
       >
         Chat
       </Typography>
-      <div>
+      <Typography>
         <Link to="/" className={styles.home_link}>
-          ← Home
+          <ArrowBackIosIcon className={styles.home_link_arrow} /> Home
         </Link>
-      </div>
+      </Typography>
       {roomsAndChat}
     </Container>
   );

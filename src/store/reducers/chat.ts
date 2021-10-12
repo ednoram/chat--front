@@ -1,5 +1,7 @@
+import { IMessage } from "src/types";
+
 interface State {
-  messages: string[];
+  messages: IMessage[];
   room: string | null;
 }
 
@@ -7,7 +9,7 @@ export interface Action {
   type: string;
   payload: {
     room?: string;
-    message?: string;
+    message?: IMessage;
   };
 }
 
@@ -30,8 +32,8 @@ const chatReducer = (
         : state;
 
     case ADD_MESSAGE:
-      return payload.message && payload.message.trim().length <= 800
-        ? { ...state, messages: [...state.messages, payload.message.trim()] }
+      return payload.message
+        ? { ...state, messages: [...state.messages, payload.message] }
         : state;
 
     default:

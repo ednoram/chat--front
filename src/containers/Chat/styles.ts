@@ -14,6 +14,11 @@ const useStyles = makeStyles({
     textDecoration: "none",
     color: theme.palette.primary.main,
   },
+  home_link_arrow: {
+    width: "20px !important",
+    height: "17px !important",
+    margin: "0 -8px -2px 0",
+  },
   rooms_and_chat: {
     gap: "20px",
     display: "grid",
@@ -44,12 +49,33 @@ const useStyles = makeStyles({
     },
   },
   message_div: {
-    marginLeft: "auto",
+    maxWidth: "80%",
+    marginLeft: "0",
+    marginRight: "auto",
     borderRadius: "8px",
-    padding: "8px 10px",
+    padding: "6px 10px",
+    boxShadow: "1px 2px 4px 0 rgb(0 0 0 / 20%)",
+    backgroundColor: theme.palette.primary.contrastText,
+  },
+  message_div_own: {
+    marginRight: "0",
+    marginLeft: "auto",
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main,
-    boxShadow: "1px 2px 4px 0 rgb(0 0 0 / 20%)",
+  },
+  message_username: {
+    fontWeight: "bold",
+    color: theme.palette.primary.main,
+  },
+  message_username_own: {
+    color: theme.palette.primary.contrastText,
+  },
+  message_text: {
+    wordBreak: "break-word",
+  },
+  message_time: {
+    textAlign: "right",
+    fontSize: "0.75rem",
   },
   form_div: {
     gap: "8px",
