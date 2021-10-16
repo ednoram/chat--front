@@ -1,23 +1,25 @@
-import { IMessage } from "src/types";
+import { IMessage, IRoom } from "src/types";
 
 interface State {
+  rooms: IRoom[];
   messages: IMessage[];
-  room: string | null;
 }
 
 export interface Action {
   type: string;
   payload: {
-    room?: string;
+    rooms?: IRoom[];
     message?: IMessage;
+    messages?: IMessage[];
   };
 }
 
-export const SET_ROOM = "SET_ROOM";
+export const SET_ROOMS = "SET_ROOMS";
 export const ADD_MESSAGE = "ADD_MESSAGE";
+export const SET_MESSAGES = "SET_MESSAGES";
 
 const INITIAL_STATE: State = {
-  room: null,
+  rooms: [],
   messages: [],
 };
 
@@ -26,9 +28,12 @@ const chatReducer = (
   { type, payload }: Action
 ): State => {
   switch (type) {
-    case SET_ROOM:
-      return payload.room && payload.room.trim().length <= 20
-        ? { ...state, messages: [], room: payload.room.trim() }
+    case SET_ROOMS:
+      return payload.rooms ? { ...state, rooms: payload.rooms } : state;
+
+    case SET_MESSAGES:
+      return payload.messages
+        ? { ...state, messages: payload.messages }
         : state;
 
     case ADD_MESSAGE:

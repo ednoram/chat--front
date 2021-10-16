@@ -1,11 +1,11 @@
-import { IMessage, IUser } from "src/types";
+import { IMessage, IRoom, IUser } from "src/types";
 
 interface State {
   user: {
     user: IUser | null;
   };
   chat: {
-    room: string | null;
+    rooms: IRoom[];
     messages: IMessage[];
   };
 }

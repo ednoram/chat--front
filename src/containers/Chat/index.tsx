@@ -1,48 +1,59 @@
-import { useRef, useEffect, FC } from "react";
+import { useState, useEffect, useRef, FC } from "react";
 import { nanoid } from "nanoid";
-import { Link } from "react-router-dom";
-import { List, ListItemButton } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Typography, Container } from "@material-ui/core";
+import { Link, useParams, useHistory } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
-import {
-  selectChatRoom,
-  selectUserData,
-  selectChatMessages,
-} from "src/store/selectors";
-import { socket } from "src/constants";
+import { IRoom } from "src/types";
 import { useAuthorize } from "src/hooks";
-import { setChatRoom } from "src/store/actions";
+import { socket, ROOMS_ROUTE } from "src/constants";
+import { getChatRoom, setChatMessages } from "src/store/actions";
+import { selectUserData, selectChatMessages } from "src/store/selectors";
 
 import Form from "./Form";
 import useStyles from "./styles";
 
-const ROOMS = ["Room 1", "Room 2", "Room 3"];
-
 const Chat: FC = () => {
+  const [room, setRoom] = useState<IRoom | null>(null);
+
   const styles = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { id: roomId }: { id: string } = useParams();
 
   const user = useSelector(selectUserData);
-  const chatRoom = useSelector(selectChatRoom);
   const messages = useSelector(selectChatMessages);
 
-  const dispatch = useDispatch();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useAuthorize();
 
   useEffect(() => {
-    socket.emit("room", chatRoom);
-  }, [chatRoom]);
+    dispatch(setChatMessages([]));
+
+    const fetchRoom = async () => {
+      const chatRoom = await getChatRoom(roomId);
+
+      if (!chatRoom) {
+        history.push(ROOMS_ROUTE);
+      } else {
+        setRoom(chatRoom);
+      }
+    };
+
+    fetchRoom();
+  }, []);
+
+  useEffect(() => {
+    if (roomId) {
+      socket.emit("room", roomId);
+    }
+  }, [roomId]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ block: "nearest" });
   }, [messages]);
-
-  useEffect(() => {
-    dispatch(setChatRoom(ROOMS[0]));
-  }, []);
 
   const getMessageDate = (date: Date) =>
     new Date(date).toLocaleTimeString("en", {
@@ -82,51 +93,33 @@ const Chat: FC = () => {
     </div>
   );
 
-  const roomsDiv = (
-    <div>
-      <Typography variant="h4" component="p" color="primary">
-        Rooms
-      </Typography>
-      <List className={styles.rooms_div}>
-        {ROOMS.map((room) => (
-          <ListItemButton
-            key={nanoid()}
-            selected={room === chatRoom}
-            onClick={() => dispatch(setChatRoom(room))}
-          >
-            {room}
-          </ListItemButton>
-        ))}
-      </List>
-    </div>
-  );
-
-  const roomsAndChat = (
-    <div className={styles.rooms_and_chat}>
-      {roomsDiv}
-      <div>
-        {messagesDiv}
-        <Form />
-      </div>
-    </div>
-  );
-
   return (
-    <Container maxWidth="md" className={styles.container}>
+    <Container maxWidth="sm" className={styles.container}>
       <Typography
-        variant="h2"
+        variant="h3"
         component="h1"
         color="primary"
         className={styles.title}
       >
         Chat
       </Typography>
-      <Typography>
-        <Link to="/" className={styles.home_link}>
-          <ArrowBackIosIcon className={styles.home_link_arrow} /> Home
+      {room?.name && (
+        <Typography
+          variant="h6"
+          component="h2"
+          color="primary"
+          className={styles.room_text}
+        >
+          Room: {room.name}
+        </Typography>
+      )}
+      <Typography className={styles.rooms_link_container}>
+        <Link to={ROOMS_ROUTE} className={styles.rooms_link}>
+          <ArrowBackIosIcon className={styles.rooms_link_arrow} /> Rooms
         </Link>
       </Typography>
-      {roomsAndChat}
+      {messagesDiv}
+      <Form roomId={roomId} />
     </Container>
   );
 };

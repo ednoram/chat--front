@@ -6,7 +6,7 @@ import { Typography, Container, Button, Box } from "@material-ui/core";
 import { useAuthorize } from "src/hooks";
 import { logOut } from "src/store/actions/user";
 import { selectUserData } from "src/store/selectors";
-import { CHAT_ROUTE, LOGIN_ROUTE } from "src/constants";
+import { LOGIN_ROUTE, ROOMS_ROUTE } from "src/constants";
 
 import useStyles from "./styles";
 
@@ -38,8 +38,8 @@ const Home: FC = () => {
         </Typography>
         <Box>
           <Typography variant="h5" component="p">
-            <Link to={CHAT_ROUTE} className={styles.chat_link}>
-              Chat
+            <Link to={ROOMS_ROUTE} className={styles.rooms_link}>
+              Rooms
             </Link>
           </Typography>
         </Box>

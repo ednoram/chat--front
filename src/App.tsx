@@ -4,9 +4,16 @@ import { ThemeProvider } from "@material-ui/styles";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 import {
+  socket,
+  ROOMS_ROUTE,
+  LOGIN_ROUTE,
+  REGISTER_ROUTE,
+} from "src/constants";
+import {
   ChatContainer,
   HomeContainer,
   LoginContainer,
+  RoomsContainer,
   RegisterContainer,
   NotFoundContainer,
 } from "src/containers";
@@ -14,18 +21,12 @@ import { theme } from "src/styles";
 import { IMessage } from "src/types";
 import { HelmetLayout } from "src/components";
 import { addChatMessage, logInWithToken } from "src/store/actions";
-import { CHAT_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, socket } from "src/constants";
 
 const App: FC = () => {
   const dispatch = useDispatch();
 
   socket.on("connect_error", (err) => {
     alert(`Connection error: ${err.message}`);
-  });
-
-  socket.on("connect", () => {
-    const message = `${socket.id} joined`;
-    socket.emit("message", message);
   });
 
   socket.on("message", (message: IMessage) => {
@@ -45,7 +46,12 @@ const App: FC = () => {
               <HomeContainer />
             </HelmetLayout>
           </Route>
-          <Route exact path={CHAT_ROUTE}>
+          <Route exact path={ROOMS_ROUTE}>
+            <HelmetLayout title="Rooms" description="Chat rooms page">
+              <RoomsContainer />
+            </HelmetLayout>
+          </Route>
+          <Route exact path={`${ROOMS_ROUTE}/:id`}>
             <HelmetLayout title="Chat" description="Chat page">
               <ChatContainer />
             </HelmetLayout>

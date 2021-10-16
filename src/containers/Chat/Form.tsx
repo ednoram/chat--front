@@ -5,21 +5,24 @@ import { Box, TextField, Button } from "@material-ui/core";
 
 import { IMessage } from "src/types";
 import { socket } from "src/constants";
-import { selectChatRoom, selectUserData } from "src/store/selectors";
+import { selectUserData } from "src/store/selectors";
 
 import useStyles from "./styles";
 
-const Form: FC = () => {
+interface Props {
+  roomId: string;
+}
+
+const Form: FC<Props> = ({ roomId }) => {
   const [inputValue, setInputValue] = useState("");
 
   const styles = useStyles();
   const user = useSelector(selectUserData);
-  const chatRoom = useSelector(selectChatRoom);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    if (!user) return;
+    if (!user || !inputValue.trim()) return;
 
     const { username, _id } = user;
 
@@ -30,7 +33,7 @@ const Form: FC = () => {
     };
 
     if (message.text && message.user.username) {
-      socket.emit("message", message, chatRoom);
+      socket.emit("message", message, roomId);
       setInputValue("");
     }
   };
@@ -39,7 +42,6 @@ const Form: FC = () => {
     <Box component="form" onSubmit={handleSubmit}>
       <Box className={styles.form_div}>
         <TextField
-          required
           fullWidth
           label="Message"
           variant="outlined"

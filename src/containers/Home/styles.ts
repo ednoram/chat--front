@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
   },
-  chat_link: {
+  rooms_link: {
     color: "black",
     textDecoration: "none",
   },

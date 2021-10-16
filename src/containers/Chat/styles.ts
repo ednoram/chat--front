@@ -4,29 +4,26 @@ import { theme } from "src/styles";
 
 const useStyles = makeStyles({
   container: {
-    margin: "60px auto 110px",
+    margin: "70px auto 110px",
   },
   title: {
     fontWeight: 700,
     textAlign: "center",
   },
-  home_link: {
+  room_text: {
+    textAlign: "center",
+  },
+  rooms_link_container: {
+    marginTop: "10px",
+  },
+  rooms_link: {
     textDecoration: "none",
     color: theme.palette.primary.main,
   },
-  home_link_arrow: {
+  rooms_link_arrow: {
+    margin: "0 -8px -2px 0",
     width: "20px !important",
     height: "17px !important",
-    margin: "0 -8px -2px 0",
-  },
-  rooms_and_chat: {
-    gap: "20px",
-    display: "grid",
-    marginTop: "16px",
-    gridTemplateColumns: "1fr 2fr",
-  },
-  rooms_div: {
-    borderRight: `2px solid ${theme.palette.primary.main}`,
   },
   messages_div: {
     gap: "6px",
