@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { Typography, Container, Button, Box } from "@material-ui/core";
 
@@ -22,6 +23,34 @@ const Home: FC = () => {
     location.href = LOGIN_ROUTE;
   };
 
+  const loading = !user;
+
+  const loadingDiv = (
+    <div className={styles.loading_div}>
+      <CircularProgress color="primary" />
+    </div>
+  );
+
+  const content = !loading ? (
+    <Box className={styles.content}>
+      <Typography variant="h4" component="p" color="primary">
+        {user?.username}
+      </Typography>
+      <Box>
+        <Typography variant="h5" component="p">
+          <Link to={ROOMS_ROUTE} className={styles.rooms_link}>
+            Rooms
+          </Link>
+        </Typography>
+      </Box>
+      <Box>
+        <Button onClick={handleLogout}>Log Out</Button>
+      </Box>
+    </Box>
+  ) : (
+    loadingDiv
+  );
+
   return (
     <Container maxWidth="md" className={styles.container}>
       <Typography
@@ -32,21 +61,7 @@ const Home: FC = () => {
       >
         Chat App
       </Typography>
-      <Box className={styles.content}>
-        <Typography variant="h4" component="p" color="primary">
-          {user?.username}
-        </Typography>
-        <Box>
-          <Typography variant="h5" component="p">
-            <Link to={ROOMS_ROUTE} className={styles.rooms_link}>
-              Rooms
-            </Link>
-          </Typography>
-        </Box>
-        <Box>
-          <Button onClick={handleLogout}>Log Out</Button>
-        </Box>
-      </Box>
+      {content}
     </Container>
   );
 };

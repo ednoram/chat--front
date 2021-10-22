@@ -25,6 +25,11 @@ const useStyles = makeStyles({
     width: "20px !important",
     height: "17px !important",
   },
+  loading_room_div: {
+    display: "flex",
+    marginTop: "40px",
+    justifyContent: "center",
+  },
   messages_div: {
     gap: "6px",
     height: "440px",
@@ -44,6 +49,10 @@ const useStyles = makeStyles({
     "&::-webkit-scrollbar-thumb": {
       backgroundColor: theme.palette.primary.main,
     },
+  },
+  no_messages_text: {
+    marginTop: "10px",
+    textAlign: "center",
   },
   message_div: {
     maxWidth: "80%",

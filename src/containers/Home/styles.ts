@@ -8,6 +8,11 @@ const useStyles = makeStyles({
     fontWeight: 700,
     textAlign: "center",
   },
+  loading_div: {
+    display: "flex",
+    marginTop: "40px",
+    justifyContent: "center",
+  },
   content: {
     gap: "28px",
     display: "flex",
