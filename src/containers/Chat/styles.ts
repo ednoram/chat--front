@@ -4,13 +4,16 @@ import { theme } from "src/styles";
 
 const useStyles = makeStyles({
   container: {
-    margin: "70px auto 110px",
+    margin: "60px auto 110px",
   },
   title: {
     fontWeight: 700,
     textAlign: "center",
   },
   room_text: {
+    textAlign: "center",
+  },
+  admin_text: {
     textAlign: "center",
   },
   rooms_link_container: {

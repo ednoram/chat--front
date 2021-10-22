@@ -10,17 +10,23 @@ const useStyles = makeStyles({
     fontWeight: 700,
     textAlign: "center",
   },
-  home_link_container: {
+  links_container: {
+    display: "flex",
     marginTop: "20px",
+    justifyContent: "space-between",
   },
   home_link: {
     textDecoration: "none",
     color: theme.palette.primary.main,
   },
-  home_link_arrow: {
+  home_link_icon: {
     margin: "0 -8px -2px 0",
     width: "20px !important",
     height: "17px !important",
+  },
+  create_room_link_icon: {
+    margin: "0 -2px -5px 0",
+    height: "22px !important",
   },
   no_rooms_text: {
     marginTop: "28px",

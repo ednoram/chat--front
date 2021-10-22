@@ -1,6 +1,7 @@
 export {
   getChatRoom,
   setChatRooms,
+  postChatRoom,
   addChatMessage,
   fetchChatRooms,
   setChatMessages,

@@ -1,5 +1,5 @@
 import { useState, useEffect, FC } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress } from "@mui/material";
 import { Typography, Container } from "@material-ui/core";
 import { Link, useParams, useHistory } from "react-router-dom";
@@ -8,6 +8,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { IRoom } from "src/types";
 import { useAuthorize } from "src/hooks";
 import { socket, ROOMS_ROUTE } from "src/constants";
+import { selectUserData } from "src/store/selectors";
 import { getChatRoom, setChatMessages } from "src/store/actions";
 
 import Form from "./Form";
@@ -20,6 +21,7 @@ const Chat: FC = () => {
   const styles = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const user = useSelector(selectUserData);
   const { id: roomId }: { id: string } = useParams();
 
   useAuthorize();
@@ -47,6 +49,7 @@ const Chat: FC = () => {
   }, [roomId]);
 
   const loading = !room?.name;
+  const userIsAdmin = user && room?.adminId === user?._id;
 
   const loadingDiv = (
     <div className={styles.loading_room_div}>
@@ -85,6 +88,11 @@ const Chat: FC = () => {
         Chat
       </Typography>
       {!loading && roomNameDiv}
+      {userIsAdmin && (
+        <Typography className={styles.admin_text}>
+          (you are the admin)
+        </Typography>
+      )}
       <Typography className={styles.rooms_link_container}>
         <Link to={ROOMS_ROUTE} className={styles.rooms_link}>
           <ArrowBackIosIcon className={styles.rooms_link_arrow} /> Rooms

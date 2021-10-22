@@ -1,20 +1,27 @@
 import { useState, useEffect, FC } from "react";
+import {
+  List,
+  Autocomplete,
+  ListItemButton,
+  CircularProgress,
+} from "@mui/material";
 import { nanoid } from "nanoid";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Typography, Container } from "@material-ui/core";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { List, ListItemButton, CircularProgress } from "@mui/material";
+import { Box, Typography, Container, TextField } from "@material-ui/core";
 
 import { useAuthorize } from "src/hooks";
-import { ROOMS_ROUTE } from "src/constants";
 import { fetchChatRooms } from "src/store/actions";
 import { selectChatRooms } from "src/store/selectors";
+import { CREATE_ROOM_ROUTE, ROOMS_ROUTE } from "src/constants";
 
 import useStyles from "./styles";
 
 const Rooms: FC = () => {
   const [loadingRooms, setLoadingRooms] = useState(false);
+  const [searchFilter, setSearchFilter] = useState<string | null>(null);
 
   const styles = useStyles();
   const history = useHistory();
@@ -28,26 +35,65 @@ const Rooms: FC = () => {
     dispatch(fetchChatRooms(setLoadingRooms));
   }, []);
 
+  const filteredRooms = searchFilter
+    ? rooms.filter((room) =>
+        room.name.toLowerCase().includes(searchFilter.trim().toLowerCase())
+      )
+    : rooms;
+
   const loadingDiv = (
     <div className={styles.loading_div}>
       <CircularProgress color="primary" />
     </div>
   );
 
+  const links = (
+    <Box className={styles.links_container}>
+      <Typography>
+        <Link to="/" className={styles.home_link}>
+          <ArrowBackIosIcon className={styles.home_link_icon} /> Home
+        </Link>
+      </Typography>
+      <Typography>
+        <Link to={CREATE_ROOM_ROUTE} className={styles.home_link}>
+          <AddCircleIcon className={styles.create_room_link_icon} /> Create Room
+        </Link>
+      </Typography>
+    </Box>
+  );
+
+  const searchBox = rooms && rooms.length > 0 && (
+    <Autocomplete
+      freeSolo
+      color="primary"
+      options={rooms.map((room) => room.name)}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label="Search"
+          margin="normal"
+          onChange={(e) => setSearchFilter(e.target.value)}
+        />
+      )}
+    />
+  );
+
   const list =
-    rooms.length > 0 ? (
+    filteredRooms.length > 0 ? (
       <List>
-        {rooms.map((room) => (
+        {filteredRooms.map((room) => (
           <ListItemButton
             key={nanoid()}
             onClick={() => history.push(`${ROOMS_ROUTE}/${room._id}`)}
           >
-            {room.name}
+            <Typography>{room.name}</Typography>
           </ListItemButton>
         ))}
       </List>
     ) : (
-      <Typography className={styles.no_rooms_text}>No Rooms</Typography>
+      <Typography className={styles.no_rooms_text}>
+        Nothing was found
+      </Typography>
     );
 
   return (
@@ -60,11 +106,8 @@ const Rooms: FC = () => {
       >
         Rooms
       </Typography>
-      <Typography className={styles.home_link_container}>
-        <Link to="/" className={styles.home_link}>
-          <ArrowBackIosIcon className={styles.home_link_arrow} /> Home
-        </Link>
-      </Typography>
+      {links}
+      {searchBox}
       {loadingRooms && rooms.length === 0 ? loadingDiv : list}
     </Container>
   );

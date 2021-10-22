@@ -8,6 +8,7 @@ import {
   ROOMS_ROUTE,
   LOGIN_ROUTE,
   REGISTER_ROUTE,
+  CREATE_ROOM_ROUTE,
 } from "src/constants";
 import {
   ChatContainer,
@@ -16,6 +17,7 @@ import {
   RoomsContainer,
   RegisterContainer,
   NotFoundContainer,
+  CreateRoomContainer,
 } from "src/containers";
 import { theme } from "src/styles";
 import { IMessage } from "src/types";
@@ -54,6 +56,11 @@ const App: FC = () => {
           <Route exact path={`${ROOMS_ROUTE}/:id`}>
             <HelmetLayout title="Chat" description="Chat page">
               <ChatContainer />
+            </HelmetLayout>
+          </Route>
+          <Route exact path={CREATE_ROOM_ROUTE}>
+            <HelmetLayout title="Create Room" description="Create room page">
+              <CreateRoomContainer />
             </HelmetLayout>
           </Route>
           <Route exact path={LOGIN_ROUTE}>
