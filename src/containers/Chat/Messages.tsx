@@ -32,24 +32,24 @@ const Messages: FC = () => {
             key={nanoid()}
             className={[
               styles.message_div,
-              message.user._id === user?._id ? styles.message_div_own : "",
+              message.username === user?.username ? styles.message_div_own : "",
             ].join(" ")}
           >
             <Typography
               className={[
                 styles.message_username,
-                message.user._id === user?._id
+                message.username === user?.username
                   ? styles.message_username_own
                   : "",
               ].join(" ")}
             >
-              {message.user.username}
+              {message.username}
             </Typography>
             <Typography className={styles.message_text}>
               {message.text}
             </Typography>
             <Typography className={styles.message_time}>
-              {getMessageDate(message?.date)}
+              {getMessageDate(message?.createdAt)}
             </Typography>
           </Box>
         ))

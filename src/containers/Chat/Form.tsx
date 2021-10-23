@@ -1,10 +1,11 @@
 import { useState, FC, FormEvent } from "react";
-import { useSelector } from "react-redux";
 import SendIcon from "@mui/icons-material/Send";
+import { useSelector, useDispatch } from "react-redux";
 import { Box, TextField, Button } from "@material-ui/core";
 
 import { IMessage } from "src/types";
 import { socket } from "src/constants";
+import { postMessage } from "src/store/actions";
 import { selectUserData } from "src/store/selectors";
 
 import useStyles from "./styles";
@@ -16,24 +17,29 @@ interface Props {
 const Form: FC<Props> = ({ roomId }) => {
   const [inputValue, setInputValue] = useState("");
 
-  const styles = useStyles();
   const user = useSelector(selectUserData);
+
+  const styles = useStyles();
+  const dispatch = useDispatch();
+
+  const emitMessage = (message: IMessage) => {
+    socket.emit("message", message);
+  };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
     if (!user || !inputValue.trim()) return;
 
-    const { username, _id } = user;
-
     const message: IMessage = {
-      date: new Date(),
-      user: { username, _id },
+      roomId,
+      createdAt: new Date(),
       text: inputValue.trim(),
+      username: user.username,
     };
 
-    if (message.text && message.user.username) {
-      socket.emit("message", message, roomId);
+    if (message.text && message.username) {
+      dispatch(postMessage(message, emitMessage));
       setInputValue("");
     }
   };
@@ -47,7 +53,6 @@ const Form: FC<Props> = ({ roomId }) => {
           variant="outlined"
           autoComplete="off"
           value={inputValue}
-          id="outlined-basic"
           inputProps={{ maxLength: 800 }}
           onChange={(e) => setInputValue(e.target.value)}
         />
@@ -55,7 +60,6 @@ const Form: FC<Props> = ({ roomId }) => {
           type="submit"
           color="primary"
           variant="contained"
-          onClick={handleSubmit}
           aria-label="send message"
         >
           <SendIcon aria-label="send icon" />

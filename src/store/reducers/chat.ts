@@ -17,7 +17,7 @@ export interface Action {
 export const SET_ROOMS = "SET_ROOMS";
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const SET_MESSAGES = "SET_MESSAGES";
-export const GET_CHAT_ROOM = "GET_CHAT_ROOM";
+export const POST_MESSAGE = "POST_MESSAGE";
 export const CREATE_CHAT_ROOM = "CREATE_CHAT_ROOM";
 
 const INITIAL_STATE: State = {

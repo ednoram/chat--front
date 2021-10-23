@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     color: theme.palette.primary.main,
   },
   rooms_link_icon: {
-    margin: "0 -8px -2px 0",
+    margin: "0 -8px -3px 0",
     width: "20px !important",
     height: "17px !important",
   },

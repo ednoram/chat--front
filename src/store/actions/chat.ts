@@ -8,14 +8,12 @@ import {
   SET_ROOMS,
   ADD_MESSAGE,
   SET_MESSAGES,
-  GET_CHAT_ROOM,
+  POST_MESSAGE,
   CREATE_CHAT_ROOM,
 } from "src/store/reducers/chat";
 import { IMessage, IRoom } from "src/types";
 import { API, ROOMS_ROUTE } from "src/constants";
 import { createAction, getTokenCookie } from "src/utils";
-
-export const sendGetRoomAction = (): Action => createAction(GET_CHAT_ROOM, {});
 
 export const sendCreateRoomAction = (): Action =>
   createAction(CREATE_CHAT_ROOM, {});
@@ -28,6 +26,8 @@ export const addChatMessage = (message: IMessage): Action =>
 
 export const setChatMessages = (messages: IMessage[]): Action =>
   createAction(SET_MESSAGES, { messages });
+
+const sendPostMessageAction = (): Action => createAction(POST_MESSAGE, {});
 
 export const fetchChatRooms =
   (setLoadingRooms: ReactDispatch<SetStateAction<boolean>>) =>
@@ -47,6 +47,7 @@ export const fetchChatRooms =
 export const postChatRoom =
   (
     name: string,
+    password: string,
     setLoading: ReactDispatch<SetStateAction<boolean>>,
     setErrors: ReactDispatch<SetStateAction<string[]>>,
     history: History
@@ -59,7 +60,7 @@ export const postChatRoom =
 
       const { data } = await API.post(
         "/api/rooms",
-        { name },
+        { name, password },
         { headers: { Authorization: token } }
       );
 
@@ -83,3 +84,52 @@ export const getChatRoom = async (id: string): Promise<IRoom | undefined> => {
     alert("Something went wrong");
   }
 };
+
+export const fetchMessages =
+  (
+    roomId: string,
+    roomPassword: string,
+    setLoading: ReactDispatch<SetStateAction<boolean>>,
+    setSuccess: ReactDispatch<SetStateAction<boolean>>,
+    setErrors: ReactDispatch<SetStateAction<string[]>>
+  ) =>
+  async (dispatch: Dispatch): Promise<void> => {
+    setLoading(true);
+
+    try {
+      const { data } = await API.get("api/messages", {
+        params: { roomId, roomPassword },
+      });
+
+      if (data) {
+        dispatch(setChatMessages(data));
+        setSuccess(true);
+      } else {
+        alert("Something went wrong");
+      }
+    } catch (err) {
+      setErrors((err as AxiosError).response?.data.errors);
+    }
+
+    setLoading(false);
+  };
+
+export const postMessage =
+  (message: IMessage, emitMessage: (message: IMessage) => void) =>
+  async (dispatch: Dispatch): Promise<void> => {
+    try {
+      const token = getTokenCookie();
+      const { text, roomId } = message;
+
+      await API.post(
+        "api/messages",
+        { text, roomId },
+        { headers: { Authorization: token } }
+      );
+
+      emitMessage(message);
+      dispatch(sendPostMessageAction());
+    } catch {
+      alert("Something went wrong");
+    }
+  };

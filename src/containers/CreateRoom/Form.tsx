@@ -12,6 +12,7 @@ import useStyles from "./styles";
 const Form: FC = () => {
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [passwordValue, setPasswordValue] = useState("");
 
   const styles = useStyles();
   const history = useHistory();
@@ -23,9 +24,12 @@ const Form: FC = () => {
     const data = new FormData(event.currentTarget);
 
     const name = String(data.get("name"));
+    const password = String(data.get("password"));
 
     if (name.trim()) {
-      dispatch(postChatRoom(name.trim(), setLoading, setErrors, history));
+      dispatch(
+        postChatRoom(name.trim(), password, setLoading, setErrors, history)
+      );
     }
   };
 
@@ -57,6 +61,20 @@ const Form: FC = () => {
         margin="normal"
         label="Room Name"
         autoComplete="off"
+        inputProps={{ maxLength: 100 }}
+      />
+      <TextField
+        required
+        fullWidth
+        autoFocus
+        margin="normal"
+        type="password"
+        name="password"
+        autoComplete="off"
+        label="Room Password"
+        value={passwordValue}
+        inputProps={{ maxLength: 100 }}
+        onChange={(e) => setPasswordValue(e.target.value.trim())}
       />
       <Button
         type="submit"

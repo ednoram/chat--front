@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     color: theme.palette.primary.main,
   },
   rooms_link_arrow: {
-    margin: "0 -8px -2px 0",
+    margin: "0 -8px -3px 0",
     width: "20px !important",
     height: "17px !important",
   },
@@ -90,6 +90,35 @@ const useStyles = makeStyles({
     gap: "8px",
     display: "flex",
     marginTop: "8px",
+  },
+  room_password_container: {
+    top: "0",
+    left: "0",
+    width: "100vw",
+    height: "100vh",
+    display: "grid",
+    position: "fixed",
+    placeItems: "center",
+    background: "rgba(0, 0, 0, 0.3)",
+  },
+  room_password_name: {
+    textAlign: "center",
+  },
+  room_password_form: {
+    width: "380px",
+    background: "white",
+    borderRadius: "8px",
+    marginBottom: "50px",
+    padding: "8px 20px 20px",
+  },
+  room_password_error: {
+    color: "red",
+    paddingLeft: "4px",
+  },
+  room_password_submit: {
+    width: "100%",
+    marginTop: "16px",
+    padding: "10px 20px",
   },
 });
 

@@ -15,6 +15,7 @@ interface Props {
 const AuthForm: FC<Props> = ({ type }) => {
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [passwordValue, setPasswordValue] = useState("");
 
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -82,6 +83,8 @@ const AuthForm: FC<Props> = ({ type }) => {
         margin="normal"
         label="Password"
         autoComplete="off"
+        value={passwordValue}
+        onChange={(e) => setPasswordValue(e.target.value.trim())}
       />
       {typeIsRegister && (
         <TextField
@@ -90,8 +93,10 @@ const AuthForm: FC<Props> = ({ type }) => {
           type="password"
           margin="normal"
           autoComplete="off"
+          value={passwordValue}
           label="Confirm Password"
           name="password-confirmation"
+          onChange={(e) => setPasswordValue(e.target.value.trim())}
         />
       )}
       <Button
