@@ -10,6 +10,7 @@ import {
   SET_MESSAGES,
   POST_MESSAGE,
   CREATE_CHAT_ROOM,
+  DELETE_ROOM_MESSAGES,
 } from "src/store/reducers/chat";
 import { IMessage, IRoom } from "src/types";
 import { API, ROOMS_ROUTE } from "src/constants";
@@ -29,6 +30,9 @@ export const setChatMessages = (messages: IMessage[]): Action =>
 
 const sendPostMessageAction = (): Action => createAction(POST_MESSAGE, {});
 
+const sendDeleteMessagesAction = (): Action =>
+  createAction(DELETE_ROOM_MESSAGES, {});
+
 export const fetchChatRooms =
   (setLoadingRooms: ReactDispatch<SetStateAction<boolean>>) =>
   async (dispatch: Dispatch): Promise<void> => {
@@ -38,7 +42,7 @@ export const fetchChatRooms =
       const { data } = await API.get("/api/rooms");
       dispatch(setChatRooms(data));
     } catch {
-      alert("Something went wrong. Could not fetch rooms.");
+      alert("Something went wrong");
     }
 
     setLoadingRooms(false);
@@ -53,6 +57,7 @@ export const postChatRoom =
     history: History
   ) =>
   async (dispatch: Dispatch): Promise<unknown> => {
+    setErrors([]);
     setLoading(true);
 
     try {
@@ -76,12 +81,12 @@ export const postChatRoom =
     setLoading(false);
   };
 
-export const getChatRoom = async (id: string): Promise<IRoom | undefined> => {
+export const getChatRoom = async (id: string): Promise<IRoom | null> => {
   try {
     const { data } = await API.get(`/api/rooms/${id}`);
-    return data;
+    return data || null;
   } catch {
-    alert("Something went wrong");
+    return null;
   }
 };
 
@@ -94,6 +99,7 @@ export const fetchMessages =
     setErrors: ReactDispatch<SetStateAction<string[]>>
   ) =>
   async (dispatch: Dispatch): Promise<void> => {
+    setErrors([]);
     setLoading(true);
 
     try {
@@ -132,4 +138,35 @@ export const postMessage =
     } catch {
       alert("Something went wrong");
     }
+  };
+
+export const deleteRoomMessages =
+  (
+    roomId: string,
+    roomPassword: string,
+    setLoading: ReactDispatch<SetStateAction<boolean>>,
+    setErrors: ReactDispatch<SetStateAction<string[]>>,
+    goToChatRoute: () => void
+  ) =>
+  async (dispatch: Dispatch): Promise<void> => {
+    setErrors([]);
+    setLoading(true);
+
+    try {
+      const token = getTokenCookie();
+
+      await API.delete("/api/messages", {
+        headers: { Authorization: token },
+        data: { roomId, roomPassword },
+      });
+
+      dispatch(sendDeleteMessagesAction());
+      dispatch(setChatMessages([]));
+
+      goToChatRoute();
+    } catch (err) {
+      setErrors((err as AxiosError).response?.data.errors);
+    }
+
+    setLoading(false);
   };

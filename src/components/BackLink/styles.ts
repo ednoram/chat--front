@@ -3,18 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import { theme } from "src/styles";
 
 const useStyles = makeStyles({
-  container: {
-    margin: "90px auto 140px",
-  },
-  title: {
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  login_link_text: {
-    marginTop: "20px",
-  },
-  login_link: {
+  link: {
+    textDecoration: "none",
     color: theme.palette.primary.main,
+  },
+  arrow_icon: {
+    margin: "0 -6px -3px 0",
+    width: "20px !important",
+    height: "17px !important",
   },
 });
 

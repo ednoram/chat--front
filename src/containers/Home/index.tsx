@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Typography, Container, Button, Box } from "@material-ui/core";
 
 import { useAuthorize } from "src/hooks";
+import { HelmetLayout } from "src/components";
 import { logOut } from "src/store/actions/user";
 import { selectUserData } from "src/store/selectors";
 import { LOGIN_ROUTE, ROOMS_ROUTE } from "src/constants";
@@ -52,17 +53,19 @@ const Home: FC = () => {
   );
 
   return (
-    <Container maxWidth="md" className={styles.container}>
-      <Typography
-        variant="h2"
-        component="h1"
-        color="primary"
-        className={styles.title}
-      >
-        Chat App
-      </Typography>
-      {content}
-    </Container>
+    <HelmetLayout title="Home" description="Home page">
+      <Container maxWidth="md" className={styles.container}>
+        <Typography
+          variant="h2"
+          component="h1"
+          color="primary"
+          className={styles.title}
+        >
+          Chat App
+        </Typography>
+        {content}
+      </Container>
+    </HelmetLayout>
   );
 };
 

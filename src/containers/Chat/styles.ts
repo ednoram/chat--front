@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     margin: "60px auto 110px",
   },
   title: {
-    fontWeight: 700,
+    fontWeight: "bold",
     textAlign: "center",
   },
   room_text: {
@@ -16,17 +16,18 @@ const useStyles = makeStyles({
   admin_text: {
     textAlign: "center",
   },
-  rooms_link_container: {
+  links_container: {
+    display: "flex",
     marginTop: "10px",
+    justifyContent: "space-between",
   },
-  rooms_link: {
+  edit_room_link: {
     textDecoration: "none",
     color: theme.palette.primary.main,
   },
-  rooms_link_arrow: {
-    margin: "0 -8px -3px 0",
-    width: "20px !important",
-    height: "17px !important",
+  edit_room_icon: {
+    height: "20px !important",
+    marginBottom: "-2px",
   },
   loading_room_div: {
     display: "flex",
@@ -112,7 +113,6 @@ const useStyles = makeStyles({
     padding: "8px 20px 20px",
   },
   room_password_error: {
-    color: "red",
     paddingLeft: "4px",
   },
   room_password_submit: {

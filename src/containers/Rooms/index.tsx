@@ -9,12 +9,12 @@ import { nanoid } from "nanoid";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Box, Typography, Container, TextField } from "@material-ui/core";
 
 import { useAuthorize } from "src/hooks";
 import { fetchChatRooms } from "src/store/actions";
 import { selectChatRooms } from "src/store/selectors";
+import { BackLink, HelmetLayout } from "src/components";
 import { CREATE_ROOM_ROUTE, ROOMS_ROUTE } from "src/constants";
 
 import useStyles from "./styles";
@@ -35,11 +35,12 @@ const Rooms: FC = () => {
     dispatch(fetchChatRooms(setLoadingRooms));
   }, []);
 
-  const filteredRooms = searchFilter
-    ? rooms.filter((room) =>
-        room.name.toLowerCase().includes(searchFilter.trim().toLowerCase())
-      )
-    : rooms;
+  const filteredRooms =
+    searchFilter !== null
+      ? rooms.filter((room) =>
+          room.name.toLowerCase().includes(searchFilter.trim().toLowerCase())
+        )
+      : rooms;
 
   const loadingDiv = (
     <div className={styles.loading_div}>
@@ -49,13 +50,9 @@ const Rooms: FC = () => {
 
   const links = (
     <Box className={styles.links_container}>
+      <BackLink route="/" text="Home" />
       <Typography>
-        <Link to="/" className={styles.home_link}>
-          <ArrowBackIosIcon className={styles.home_link_icon} /> Home
-        </Link>
-      </Typography>
-      <Typography>
-        <Link to={CREATE_ROOM_ROUTE} className={styles.home_link}>
+        <Link to={CREATE_ROOM_ROUTE} className={styles.create_room_link}>
           <AddCircleIcon className={styles.create_room_link_icon} /> Create Room
         </Link>
       </Typography>
@@ -66,12 +63,14 @@ const Rooms: FC = () => {
     <Autocomplete
       freeSolo
       color="primary"
+      disableClearable
       options={rooms.map((room) => room.name)}
       renderInput={(params) => (
         <TextField
           {...params}
           label="Search"
           margin="normal"
+          value={searchFilter}
           onChange={(e) => setSearchFilter(e.target.value)}
         />
       )}
@@ -97,19 +96,21 @@ const Rooms: FC = () => {
     );
 
   return (
-    <Container maxWidth="sm" className={styles.container}>
-      <Typography
-        variant="h3"
-        component="h1"
-        color="primary"
-        className={styles.title}
-      >
-        Rooms
-      </Typography>
-      {links}
-      {searchBox}
-      {loadingRooms && rooms.length === 0 ? loadingDiv : list}
-    </Container>
+    <HelmetLayout title="Rooms" description="Chat rooms page">
+      <Container maxWidth="sm" className={styles.container}>
+        <Typography
+          variant="h3"
+          component="h1"
+          color="primary"
+          className={styles.title}
+        >
+          Rooms
+        </Typography>
+        {links}
+        {searchBox}
+        {loadingRooms && rooms.length === 0 ? loadingDiv : list}
+      </Container>
+    </HelmetLayout>
   );
 };
 

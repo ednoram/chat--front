@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     margin: "90px auto 140px",
   },
   title: {
-    fontWeight: 700,
+    fontWeight: "bold",
     textAlign: "center",
   },
   register_link_text: {

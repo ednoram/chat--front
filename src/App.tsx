@@ -17,11 +17,11 @@ import {
   RoomsContainer,
   RegisterContainer,
   NotFoundContainer,
+  EditRoomContainer,
   CreateRoomContainer,
 } from "src/containers";
 import { theme } from "src/styles";
 import { IMessage } from "src/types";
-import { HelmetLayout } from "src/components";
 import { addChatMessage, logInWithToken } from "src/store/actions";
 
 const App: FC = () => {
@@ -43,44 +43,22 @@ const App: FC = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <Route exact path="/">
-            <HelmetLayout title="Home" description="Home page">
-              <HomeContainer />
-            </HelmetLayout>
-          </Route>
-          <Route exact path={ROOMS_ROUTE}>
-            <HelmetLayout title="Rooms" description="Chat rooms page">
-              <RoomsContainer />
-            </HelmetLayout>
-          </Route>
-          <Route exact path={`${ROOMS_ROUTE}/:id`}>
-            <HelmetLayout title="Chat" description="Chat page">
-              <ChatContainer />
-            </HelmetLayout>
-          </Route>
-          <Route exact path={CREATE_ROOM_ROUTE}>
-            <HelmetLayout title="Create Room" description="Create room page">
-              <CreateRoomContainer />
-            </HelmetLayout>
-          </Route>
-          <Route exact path={LOGIN_ROUTE}>
-            <HelmetLayout title="Log In" description="Login page">
-              <LoginContainer />
-            </HelmetLayout>
-          </Route>
-          <Route exact path={REGISTER_ROUTE}>
-            <HelmetLayout title="Register" description="Register page">
-              <RegisterContainer />
-            </HelmetLayout>
-          </Route>
-          <Route>
-            <HelmetLayout
-              title="404: Page Not Found"
-              description="Page not found"
-            >
-              <NotFoundContainer />
-            </HelmetLayout>
-          </Route>
+          <Route
+            exact
+            path={`${ROOMS_ROUTE}/:id/edit`}
+            component={EditRoomContainer}
+          />
+          <Route
+            exact
+            path={CREATE_ROOM_ROUTE}
+            component={CreateRoomContainer}
+          />
+          <Route exact path="/" component={HomeContainer} />
+          <Route exact path={ROOMS_ROUTE} component={RoomsContainer} />
+          <Route exact path={LOGIN_ROUTE} component={LoginContainer} />
+          <Route exact path={REGISTER_ROUTE} component={RegisterContainer} />
+          <Route exact path={`${ROOMS_ROUTE}/:id`} component={ChatContainer} />
+          <Route component={NotFoundContainer} />
         </Switch>
       </Router>
     </ThemeProvider>

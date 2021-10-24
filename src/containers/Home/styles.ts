@@ -5,7 +5,7 @@ const useStyles = makeStyles({
     margin: "70px auto 140px",
   },
   title: {
-    fontWeight: 700,
+    fontWeight: "bold",
     textAlign: "center",
   },
   loading_div: {

@@ -1,13 +1,14 @@
 import { useState, useEffect, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import EditIcon from "@mui/icons-material/Edit";
 import { CircularProgress } from "@mui/material";
-import { Typography, Container } from "@material-ui/core";
-import { Link, useParams, useHistory } from "react-router-dom";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useDispatch, useSelector } from "react-redux";
+import { Typography, Container, Box } from "@material-ui/core";
+import { useParams, useHistory, Link } from "react-router-dom";
 
 import { IRoom } from "src/types";
 import { socket, ROOMS_ROUTE } from "src/constants";
 import { selectUserData } from "src/store/selectors";
+import { BackLink, HelmetLayout } from "src/components";
 import { useAuthorize, useDisableBodyScroll } from "src/hooks";
 import { getChatRoom, setChatMessages } from "src/store/actions";
 
@@ -71,6 +72,18 @@ const Chat: FC = () => {
     </Typography>
   );
 
+  const editRoomLink = userIsAdmin && (
+    <Typography>
+      <Link
+        to={`${ROOMS_ROUTE}/${roomId}/edit`}
+        className={styles.edit_room_link}
+      >
+        <EditIcon className={styles.edit_room_icon} />
+        Edit
+      </Link>
+    </Typography>
+  );
+
   const chatDiv = !loading ? (
     <div>
       <Messages />
@@ -80,22 +93,10 @@ const Chat: FC = () => {
     loadingDiv
   );
 
-  const roomsLink = (
-    <Typography className={styles.rooms_link_container}>
-      <Link to={ROOMS_ROUTE} className={styles.rooms_link}>
-        <ArrowBackIosIcon className={styles.rooms_link_arrow} /> Rooms
-      </Link>
-    </Typography>
-  );
-
   return (
-    <>
+    <HelmetLayout title="Chat" description="Chat page">
       {!roomPassword && (
-        <RoomPasswordForm
-          room={room}
-          roomsLink={roomsLink}
-          setRoomPassword={setRoomPassword}
-        />
+        <RoomPasswordForm room={room} setRoomPassword={setRoomPassword} />
       )}
       <Container maxWidth="sm" className={styles.container}>
         <Typography
@@ -112,10 +113,13 @@ const Chat: FC = () => {
             (you are the admin)
           </Typography>
         )}
-        {roomsLink}
+        <Box className={styles.links_container}>
+          <BackLink route={ROOMS_ROUTE} text="Rooms" />
+          {editRoomLink}
+        </Box>
         {chatDiv}
       </Container>
-    </>
+    </HelmetLayout>
   );
 };
 

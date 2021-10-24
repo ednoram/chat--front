@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     margin: "70px auto 140px",
   },
   title: {
-    fontWeight: 700,
+    fontWeight: "bold",
     textAlign: "center",
   },
   links_container: {
@@ -15,14 +15,9 @@ const useStyles = makeStyles({
     marginTop: "20px",
     justifyContent: "space-between",
   },
-  home_link: {
+  create_room_link: {
     textDecoration: "none",
     color: theme.palette.primary.main,
-  },
-  home_link_icon: {
-    margin: "0 -8px -3px 0",
-    width: "20px !important",
-    height: "17px !important",
   },
   create_room_link_icon: {
     margin: "0 -2px -5px 0",

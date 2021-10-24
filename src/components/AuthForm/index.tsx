@@ -1,9 +1,9 @@
 import { useState, FormEvent, FC } from "react";
-import { nanoid } from "nanoid";
 import { useDispatch } from "react-redux";
 import { Box, TextField, Button } from "@material-ui/core";
-import { List, ListItem, ListItemText, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
+import { ErrorsList } from "src/components";
 import { logIn, register } from "src/store/actions";
 
 import useStyles from "./styles";
@@ -24,6 +24,8 @@ const AuthForm: FC<Props> = ({ type }) => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (loading) return;
 
     const data = new FormData(event.currentTarget);
 
@@ -52,20 +54,10 @@ const AuthForm: FC<Props> = ({ type }) => {
     </div>
   );
 
-  const errorsList = errors.length > 0 && (
-    <List className={styles.errors_list}>
-      {errors.map((error) => (
-        <ListItem key={nanoid()} className={styles.errors_list_item}>
-          <ListItemText primary={error} />
-        </ListItem>
-      ))}
-    </List>
-  );
-
   return (
     <Box component="form" onSubmit={handleSubmit} className={styles.form}>
       {loadingDiv}
-      {errorsList}
+      <ErrorsList errors={errors} setErrors={setErrors} />
       <TextField
         required
         fullWidth
@@ -93,10 +85,8 @@ const AuthForm: FC<Props> = ({ type }) => {
           type="password"
           margin="normal"
           autoComplete="off"
-          value={passwordValue}
           label="Confirm Password"
           name="password-confirmation"
-          onChange={(e) => setPasswordValue(e.target.value.trim())}
         />
       )}
       <Button

@@ -1,10 +1,10 @@
 import { useState, FC, FormEvent } from "react";
-import { nanoid } from "nanoid";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
+import { CircularProgress } from "@mui/material";
 import { Box, TextField, Button } from "@material-ui/core";
-import { List, ListItem, ListItemText, CircularProgress } from "@mui/material";
 
+import { ErrorsList } from "src/components";
 import { postChatRoom } from "src/store/actions";
 
 import useStyles from "./styles";
@@ -39,20 +39,10 @@ const Form: FC = () => {
     </div>
   );
 
-  const errorsList = errors.length > 0 && (
-    <List className={styles.errors_list}>
-      {errors.map((error) => (
-        <ListItem key={nanoid()} className={styles.errors_list_item}>
-          <ListItemText primary={error} />
-        </ListItem>
-      ))}
-    </List>
-  );
-
   return (
     <Box component="form" onSubmit={handleSubmit} className={styles.form}>
       {loadingDiv}
-      {errorsList}
+      <ErrorsList errors={errors} setErrors={setErrors} />
       <TextField
         required
         fullWidth
@@ -66,7 +56,6 @@ const Form: FC = () => {
       <TextField
         required
         fullWidth
-        autoFocus
         margin="normal"
         type="password"
         name="password"

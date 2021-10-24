@@ -1,20 +1,22 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { theme } from "src/styles";
-
 const useStyles = makeStyles({
   container: {
-    margin: "90px auto 140px",
+    margin: "70px auto 140px",
   },
   title: {
     fontWeight: "bold",
     textAlign: "center",
   },
-  login_link_text: {
+  room_name: {
+    textAlign: "center",
+  },
+  back_link_container: {
     marginTop: "20px",
   },
-  login_link: {
-    color: theme.palette.primary.main,
+  delete_messages_button: {
+    marginTop: "20px",
+    padding: "10px 20px",
   },
 });
 

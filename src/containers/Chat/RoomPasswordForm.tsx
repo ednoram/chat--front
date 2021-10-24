@@ -4,26 +4,26 @@ import {
   Dispatch,
   FormEvent,
   useEffect,
-  ReactElement,
   SetStateAction,
 } from "react";
 import { nanoid } from "nanoid";
 import { TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Button, Container, Typography } from "@material-ui/core";
 
 import { IRoom } from "src/types";
+import { BackLink } from "src/components";
+import { ROOMS_ROUTE } from "src/constants";
 import { fetchMessages } from "src/store/actions";
 
 import useStyles from "./styles";
 
 interface Props {
   room: IRoom | null;
-  roomsLink: ReactElement;
   setRoomPassword: Dispatch<SetStateAction<string | null>>;
 }
 
-const RoomPasswordForm: FC<Props> = ({ room, roomsLink, setRoomPassword }) => {
+const RoomPasswordForm: FC<Props> = ({ room, setRoomPassword }) => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -60,18 +60,23 @@ const RoomPasswordForm: FC<Props> = ({ room, roomsLink, setRoomPassword }) => {
 
   const errorsDiv = errors.map((error) => (
     <Box key={nanoid()}>
-      <Typography className={styles.room_password_error}>{error}</Typography>
+      <Typography color="secondary" className={styles.room_password_error}>
+        {error}
+      </Typography>
     </Box>
   ));
 
   return (
     <Box className={styles.room_password_container}>
-      <Box
+      <Container
+        maxWidth="xs"
         component="form"
         onSubmit={handleSubmit}
         className={styles.room_password_form}
       >
-        {roomsLink}
+        <Box className={styles.links_container}>
+          <BackLink route={ROOMS_ROUTE} text="Rooms" />
+        </Box>
         {roomName}
         <TextField
           required
@@ -96,7 +101,7 @@ const RoomPasswordForm: FC<Props> = ({ room, roomsLink, setRoomPassword }) => {
         >
           Submit
         </Button>
-      </Box>
+      </Container>
     </Box>
   );
 };

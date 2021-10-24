@@ -19,6 +19,7 @@ export const ADD_MESSAGE = "ADD_MESSAGE";
 export const SET_MESSAGES = "SET_MESSAGES";
 export const POST_MESSAGE = "POST_MESSAGE";
 export const CREATE_CHAT_ROOM = "CREATE_CHAT_ROOM";
+export const DELETE_ROOM_MESSAGES = "DELETE_ROOM_MESSAGES";
 
 const INITIAL_STATE: State = {
   rooms: [],
