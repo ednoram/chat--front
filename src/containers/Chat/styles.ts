@@ -29,11 +29,6 @@ const useStyles = makeStyles({
     height: "20px !important",
     marginBottom: "-2px",
   },
-  loading_room_div: {
-    display: "flex",
-    marginTop: "40px",
-    justifyContent: "center",
-  },
   messages_div: {
     gap: "6px",
     height: "440px",
@@ -110,7 +105,7 @@ const useStyles = makeStyles({
     background: "white",
     borderRadius: "8px",
     marginBottom: "50px",
-    padding: "8px 20px 20px",
+    padding: "16px 20px",
   },
   room_password_error: {
     paddingLeft: "4px",

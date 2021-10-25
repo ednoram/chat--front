@@ -7,18 +7,22 @@ import {
   socket,
   ROOMS_ROUTE,
   LOGIN_ROUTE,
+  ACCOUNT_ROUTE,
   REGISTER_ROUTE,
   CREATE_ROOM_ROUTE,
+  EDIT_ACCOUNT_ROUTE,
 } from "src/constants";
 import {
   ChatContainer,
   HomeContainer,
   LoginContainer,
   RoomsContainer,
+  AccountContainer,
   RegisterContainer,
   NotFoundContainer,
   EditRoomContainer,
   CreateRoomContainer,
+  EditAccountContainer,
 } from "src/containers";
 import { theme } from "src/styles";
 import { IMessage } from "src/types";
@@ -53,9 +57,15 @@ const App: FC = () => {
             path={CREATE_ROOM_ROUTE}
             component={CreateRoomContainer}
           />
+          <Route
+            exact
+            path={EDIT_ACCOUNT_ROUTE}
+            component={EditAccountContainer}
+          />
           <Route exact path="/" component={HomeContainer} />
           <Route exact path={ROOMS_ROUTE} component={RoomsContainer} />
           <Route exact path={LOGIN_ROUTE} component={LoginContainer} />
+          <Route exact path={ACCOUNT_ROUTE} component={AccountContainer} />
           <Route exact path={REGISTER_ROUTE} component={RegisterContainer} />
           <Route exact path={`${ROOMS_ROUTE}/:id`} component={ChatContainer} />
           <Route component={NotFoundContainer} />

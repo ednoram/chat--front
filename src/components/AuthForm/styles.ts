@@ -8,12 +8,6 @@ const useStyles = makeStyles({
     padding: "8px 0",
     marginTop: "16px",
   },
-  loading_div: {
-    display: "flex",
-    marginTop: "30px",
-    alignItems: "center",
-    justifyContent: "center",
-  },
 });
 
 export default useStyles;

@@ -9,18 +9,21 @@ import {
   removeTokenCookie,
 } from "src/utils";
 import { IUser } from "src/types";
-import { API, LOGIN_ROUTE } from "src/constants";
-import { SET_USER_DATA } from "src/store/reducers/user";
+import { API } from "src/constants";
+import { SET_USER_DATA, CHANGE_USER_PASSWORD } from "src/store/reducers/user";
 
 const setUserData = (data: IUser | null) =>
   createAction(SET_USER_DATA, { user: data });
+
+const sendChangePasswordAction = () => createAction(CHANGE_USER_PASSWORD, {});
 
 export const logIn =
   (
     username: string,
     password: string,
     setLoading: ReactDispatch<SetStateAction<boolean>>,
-    setErrors: ReactDispatch<SetStateAction<string[]>>
+    setErrors: ReactDispatch<SetStateAction<string[]>>,
+    goToHomeRoute: () => void
   ) =>
   async (dispatch: Dispatch): Promise<void> => {
     setErrors([]);
@@ -32,13 +35,9 @@ export const logIn =
         password,
       });
 
-      if (data?.user && data?.token) {
-        dispatch(setUserData(data.user));
-        setTokenCookie(data.token);
-        location.href = "/";
-      } else {
-        alert("Something went wrong");
-      }
+      dispatch(setUserData(data.user));
+      setTokenCookie(data.token);
+      goToHomeRoute();
     } catch (err) {
       setErrors((err as AxiosError).response?.data.errors);
     }
@@ -52,25 +51,22 @@ export const register =
     password: string,
     passwordConfirmation: string,
     setLoading: ReactDispatch<SetStateAction<boolean>>,
-    setErrors: ReactDispatch<SetStateAction<string[]>>
+    setErrors: ReactDispatch<SetStateAction<string[]>>,
+    goToLoginRoute: () => void
   ) =>
   async (): Promise<void> => {
     setErrors([]);
     setLoading(true);
 
     try {
-      const { data } = await API.post("/api/user/register", {
+      await API.post("/api/user/register", {
         username,
         password,
         passwordConfirmation,
       });
 
-      if (data?.success) {
-        setErrors([]);
-        location.href = LOGIN_ROUTE;
-      } else {
-        alert("Something went wrong");
-      }
+      setErrors([]);
+      goToLoginRoute();
     } catch (err) {
       setErrors((err as AxiosError).response?.data.errors);
     }
@@ -109,4 +105,39 @@ export const logInWithToken =
     } catch {
       dispatch(logOut());
     }
+  };
+
+export const changeUserPassword =
+  (
+    currentPassword: string,
+    newPassword: string,
+    passwordConfirmation: string,
+    setLoading: ReactDispatch<SetStateAction<boolean>>,
+    setErrors: ReactDispatch<SetStateAction<string[]>>,
+    goToHomeRoute: () => void
+  ) =>
+  async (dispatch: Dispatch): Promise<void> => {
+    setErrors([]);
+    setLoading(true);
+
+    try {
+      const token = getTokenCookie();
+
+      await API.patch(
+        "api/user",
+        {
+          newPassword,
+          currentPassword,
+          passwordConfirmation,
+        },
+        { headers: { Authorization: token } }
+      );
+
+      dispatch(sendChangePasswordAction());
+      goToHomeRoute();
+    } catch (err) {
+      setErrors((err as AxiosError).response?.data.errors);
+    }
+
+    setLoading(false);
   };

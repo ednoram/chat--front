@@ -74,9 +74,7 @@ const RoomPasswordForm: FC<Props> = ({ room, setRoomPassword }) => {
         onSubmit={handleSubmit}
         className={styles.room_password_form}
       >
-        <Box className={styles.links_container}>
-          <BackLink route={ROOMS_ROUTE} text="Rooms" />
-        </Box>
+        <BackLink route={ROOMS_ROUTE} text="Rooms" />
         {roomName}
         <TextField
           required

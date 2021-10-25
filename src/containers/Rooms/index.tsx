@@ -1,21 +1,16 @@
 import { useState, useEffect, FC } from "react";
-import {
-  List,
-  Autocomplete,
-  ListItemButton,
-  CircularProgress,
-} from "@mui/material";
 import { nanoid } from "nanoid";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { List, Autocomplete, ListItemButton } from "@mui/material";
 import { Box, Typography, Container, TextField } from "@material-ui/core";
 
 import { useAuthorize } from "src/hooks";
 import { fetchChatRooms } from "src/store/actions";
 import { selectChatRooms } from "src/store/selectors";
-import { BackLink, HelmetLayout } from "src/components";
 import { CREATE_ROOM_ROUTE, ROOMS_ROUTE } from "src/constants";
+import { BackLink, HelmetLayout, Loader } from "src/components";
 
 import useStyles from "./styles";
 
@@ -41,12 +36,6 @@ const Rooms: FC = () => {
           room.name.toLowerCase().includes(searchFilter.trim().toLowerCase())
         )
       : rooms;
-
-  const loadingDiv = (
-    <div className={styles.loading_div}>
-      <CircularProgress color="primary" />
-    </div>
-  );
 
   const links = (
     <Box className={styles.links_container}>
@@ -108,7 +97,7 @@ const Rooms: FC = () => {
         </Typography>
         {links}
         {searchBox}
-        {loadingRooms && rooms.length === 0 ? loadingDiv : list}
+        {loadingRooms && rooms.length === 0 ? <Loader loading={true} /> : list}
       </Container>
     </HelmetLayout>
   );

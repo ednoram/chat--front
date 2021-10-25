@@ -4,27 +4,34 @@ import { theme } from "src/styles";
 
 const useStyles = makeStyles({
   container: {
-    margin: "70px auto 140px",
+    margin: "70px auto 120px",
   },
   title: {
     fontWeight: "bold",
     textAlign: "center",
   },
-  content: {
-    gap: "28px",
+  links_div: {
     display: "flex",
     marginTop: "20px",
-    textAlign: "center",
-    flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
-  account_link: {
+  edit_link: {
     textDecoration: "none",
     color: theme.palette.primary.main,
   },
-  rooms_link: {
-    color: "black",
-    textDecoration: "none",
+  edit_link_icon: {
+    height: "20px !important",
+    marginBottom: "-2px",
+  },
+  user_info: {
+    marginTop: "20px",
+  },
+  logout_button_container: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  logout_button: {
+    marginTop: "20px",
   },
 });
 

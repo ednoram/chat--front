@@ -27,12 +27,6 @@ const useStyles = makeStyles({
     marginTop: "28px",
     textAlign: "center",
   },
-  loading_div: {
-    display: "flex",
-    marginTop: "30px",
-    alignItems: "center",
-    justifyContent: "center",
-  },
 });
 
 export default useStyles;

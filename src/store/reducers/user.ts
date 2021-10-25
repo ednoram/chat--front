@@ -12,6 +12,7 @@ export interface Action {
 }
 
 export const SET_USER_DATA = "SET_USER_DATA";
+export const CHANGE_USER_PASSWORD = "CHANGE_USER_PASSWORD";
 
 const INITIAL_STATE: State = {
   user: null,

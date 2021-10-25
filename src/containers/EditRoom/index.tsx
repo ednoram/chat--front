@@ -10,8 +10,9 @@ import { selectUserData } from "src/store/selectors";
 import { BackLink, HelmetLayout } from "src/components";
 import { getChatRoom, setChatMessages } from "src/store/actions";
 
-import Form from "./Form";
 import useStyles from "./styles";
+import ChangePasswordForm from "./ChangePasswordForm";
+import DeleteMessagesForm from "./DeleteMessagesForm";
 
 const EditRoom: FC = () => {
   const [room, setRoom] = useState<IRoom | null>(null);
@@ -60,13 +61,18 @@ const EditRoom: FC = () => {
         >
           Edit Room
         </Typography>
-        <Typography variant="h5" component="p" className={styles.room_name}>
+        <Typography variant="h6" component="h2" className={styles.room_name}>
           Room: {room?.name}
         </Typography>
         <Box className={styles.back_link_container}>
           <BackLink route={chatRoute} text="Cancel" />
         </Box>
-        <Form roomId={roomId} chatRoute={chatRoute} />
+        <section>
+          <ChangePasswordForm roomId={roomId} chatRoute={chatRoute} />
+        </section>
+        <section>
+          <DeleteMessagesForm roomId={roomId} chatRoute={chatRoute} />
+        </section>
       </Container>
     </HelmetLayout>
   );

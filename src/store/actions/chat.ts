@@ -11,10 +11,17 @@ import {
   POST_MESSAGE,
   CREATE_CHAT_ROOM,
   DELETE_ROOM_MESSAGES,
+  CHANGE_ROOM_PASSWORD,
 } from "src/store/reducers/chat";
 import { IMessage, IRoom } from "src/types";
 import { API, ROOMS_ROUTE } from "src/constants";
 import { createAction, getTokenCookie } from "src/utils";
+
+const sendDeleteMessagesAction = (): Action =>
+  createAction(DELETE_ROOM_MESSAGES, {});
+
+const sendChangePasswordAction = (): Action =>
+  createAction(CHANGE_ROOM_PASSWORD, {});
 
 export const sendCreateRoomAction = (): Action =>
   createAction(CREATE_CHAT_ROOM, {});
@@ -29,9 +36,6 @@ export const setChatMessages = (messages: IMessage[]): Action =>
   createAction(SET_MESSAGES, { messages });
 
 const sendPostMessageAction = (): Action => createAction(POST_MESSAGE, {});
-
-const sendDeleteMessagesAction = (): Action =>
-  createAction(DELETE_ROOM_MESSAGES, {});
 
 export const fetchChatRooms =
   (setLoadingRooms: ReactDispatch<SetStateAction<boolean>>) =>
@@ -138,6 +142,37 @@ export const postMessage =
     } catch {
       alert("Something went wrong");
     }
+  };
+
+export const changeRoomPassword =
+  (
+    roomId: string,
+    currentPassword: string,
+    newPassword: string,
+    setLoading: ReactDispatch<SetStateAction<boolean>>,
+    setErrors: ReactDispatch<SetStateAction<string[]>>,
+    goToChatRoute: () => void
+  ) =>
+  async (dispatch: Dispatch): Promise<void> => {
+    setErrors([]);
+    setLoading(true);
+
+    try {
+      const token = getTokenCookie();
+
+      await API.patch(
+        `/api/rooms/${roomId}`,
+        { currentPassword, newPassword },
+        { headers: { Authorization: token } }
+      );
+
+      dispatch(sendChangePasswordAction());
+      goToChatRoute();
+    } catch (err) {
+      setErrors((err as AxiosError).response?.data.errors);
+    }
+
+    setLoading(false);
   };
 
 export const deleteRoomMessages =

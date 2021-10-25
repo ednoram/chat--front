@@ -14,7 +14,14 @@ const useStyles = makeStyles({
   back_link_container: {
     marginTop: "20px",
   },
-  delete_messages_button: {
+  form_heading: {
+    marginTop: "20px",
+    textAlign: "center",
+  },
+  delete_messages_form: {
+    marginTop: "50px",
+  },
+  submit_form_button: {
     marginTop: "20px",
     padding: "10px 20px",
   },

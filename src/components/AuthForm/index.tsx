@@ -1,10 +1,11 @@
 import { useState, FormEvent, FC } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Box, TextField, Button } from "@material-ui/core";
-import { CircularProgress } from "@mui/material";
 
-import { ErrorsList } from "src/components";
+import { LOGIN_ROUTE } from "src/constants";
 import { logIn, register } from "src/store/actions";
+import { ErrorsList, Loader } from "src/components";
 
 import useStyles from "./styles";
 
@@ -18,9 +19,18 @@ const AuthForm: FC<Props> = ({ type }) => {
   const [passwordValue, setPasswordValue] = useState("");
 
   const styles = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const typeIsRegister = type === "register";
+
+  const goToHomeRoute = () => {
+    history.push("/");
+  };
+
+  const goToLoginRoute = () => {
+    history.push(LOGIN_ROUTE);
+  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,23 +50,18 @@ const AuthForm: FC<Props> = ({ type }) => {
           password,
           passwordConfirmation,
           setLoading,
-          setErrors
+          setErrors,
+          goToLoginRoute
         )
       );
     } else {
-      dispatch(logIn(username, password, setLoading, setErrors));
+      dispatch(logIn(username, password, setLoading, setErrors, goToHomeRoute));
     }
   };
 
-  const loadingDiv = loading && (
-    <div className={styles.loading_div}>
-      <CircularProgress color="primary" />
-    </div>
-  );
-
   return (
     <Box component="form" onSubmit={handleSubmit} className={styles.form}>
-      {loadingDiv}
+      <Loader loading={loading} isFormLoader />
       <ErrorsList errors={errors} setErrors={setErrors} />
       <TextField
         required

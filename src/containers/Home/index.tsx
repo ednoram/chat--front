@@ -1,14 +1,13 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { Typography, Container, Button, Box } from "@material-ui/core";
 
 import { useAuthorize } from "src/hooks";
-import { HelmetLayout } from "src/components";
-import { logOut } from "src/store/actions/user";
+import { logOut } from "src/store/actions";
 import { selectUserData } from "src/store/selectors";
-import { LOGIN_ROUTE, ROOMS_ROUTE } from "src/constants";
+import { HelmetLayout, Loader } from "src/components";
+import { ACCOUNT_ROUTE, LOGIN_ROUTE, ROOMS_ROUTE } from "src/constants";
 
 import useStyles from "./styles";
 
@@ -24,32 +23,30 @@ const Home: FC = () => {
     location.href = LOGIN_ROUTE;
   };
 
-  const loading = !user;
-
-  const loadingDiv = (
-    <div className={styles.loading_div}>
-      <CircularProgress color="primary" />
-    </div>
-  );
-
-  const content = !loading ? (
+  const content = user ? (
     <Box className={styles.content}>
       <Typography variant="h4" component="p" color="primary">
-        {user?.username}
+        <Link
+          to={ACCOUNT_ROUTE}
+          aria-label="account page"
+          className={styles.account_link}
+        >
+          {user?.username}
+        </Link>
+      </Typography>
+      <Typography variant="h5" component="p">
+        <Link to={ROOMS_ROUTE} className={styles.rooms_link}>
+          Rooms
+        </Link>
       </Typography>
       <Box>
-        <Typography variant="h5" component="p">
-          <Link to={ROOMS_ROUTE} className={styles.rooms_link}>
-            Rooms
-          </Link>
-        </Typography>
-      </Box>
-      <Box>
-        <Button onClick={handleLogout}>Log Out</Button>
+        <Button color="secondary" onClick={handleLogout}>
+          Log Out
+        </Button>
       </Box>
     </Box>
   ) : (
-    loadingDiv
+    <Loader loading={true} />
   );
 
   return (

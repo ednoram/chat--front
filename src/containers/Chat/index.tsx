@@ -1,6 +1,5 @@
 import { useState, useEffect, FC } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import { CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography, Container, Box } from "@material-ui/core";
 import { useParams, useHistory, Link } from "react-router-dom";
@@ -8,8 +7,8 @@ import { useParams, useHistory, Link } from "react-router-dom";
 import { IRoom } from "src/types";
 import { socket, ROOMS_ROUTE } from "src/constants";
 import { selectUserData } from "src/store/selectors";
-import { BackLink, HelmetLayout } from "src/components";
 import { useAuthorize, useDisableBodyScroll } from "src/hooks";
+import { BackLink, HelmetLayout, Loader } from "src/components";
 import { getChatRoom, setChatMessages } from "src/store/actions";
 
 import Form from "./Form";
@@ -55,12 +54,6 @@ const Chat: FC = () => {
   const loading = !room?.name;
   const userIsAdmin = user && room?.adminId === user?._id;
 
-  const loadingDiv = (
-    <div className={styles.loading_room_div}>
-      <CircularProgress color="primary" />
-    </div>
-  );
-
   const roomNameDiv = (
     <Typography
       variant="h6"
@@ -90,7 +83,7 @@ const Chat: FC = () => {
       <Form roomId={roomId} />
     </div>
   ) : (
-    loadingDiv
+    <Loader loading={true} />
   );
 
   return (

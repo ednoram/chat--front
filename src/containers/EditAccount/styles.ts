@@ -8,16 +8,19 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     textAlign: "center",
   },
-  rooms_link_container: {
+  username: {
+    textAlign: "center",
+  },
+  back_link_container: {
     marginTop: "20px",
   },
-  form: {
-    display: "flex",
-    flexDirection: "column",
+  form_heading: {
+    marginTop: "20px",
+    textAlign: "center",
   },
-  submit_button: {
-    padding: "8px 0",
-    marginTop: "16px",
+  submit_form_button: {
+    marginTop: "20px",
+    padding: "10px 20px",
   },
 });
 

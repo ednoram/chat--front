@@ -1,11 +1,10 @@
 import { useState, FC, FormEvent } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
-import { CircularProgress } from "@mui/material";
 import { Box, TextField, Button } from "@material-ui/core";
 
-import { ErrorsList } from "src/components";
 import { postChatRoom } from "src/store/actions";
+import { ErrorsList, Loader } from "src/components";
 
 import useStyles from "./styles";
 
@@ -33,15 +32,9 @@ const Form: FC = () => {
     }
   };
 
-  const loadingDiv = loading && (
-    <div className={styles.loading_div}>
-      <CircularProgress color="primary" />
-    </div>
-  );
-
   return (
     <Box component="form" onSubmit={handleSubmit} className={styles.form}>
-      {loadingDiv}
+      <Loader loading={loading} isFormLoader />
       <ErrorsList errors={errors} setErrors={setErrors} />
       <TextField
         required

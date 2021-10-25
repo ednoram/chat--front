@@ -1,4 +1,11 @@
 export {
+  logIn,
+  logOut,
+  register,
+  logInWithToken,
+  changeUserPassword,
+} from "./user";
+export {
   getChatRoom,
   postMessage,
   setChatRooms,
@@ -7,6 +14,6 @@ export {
   addChatMessage,
   fetchChatRooms,
   setChatMessages,
+  changeRoomPassword,
   deleteRoomMessages,
 } from "./chat";
-export { logIn, register, logInWithToken } from "./user";
