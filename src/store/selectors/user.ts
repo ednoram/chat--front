@@ -1,3 +1,3 @@
-import { State, IUser } from "src/types";
+import { IState, IUser } from "src/types";
 
-export const selectUserData = (state: State): IUser | null => state.user.user;
+export const selectUserData = (state: IState): IUser | null => state.user.user;

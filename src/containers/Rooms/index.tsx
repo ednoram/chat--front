@@ -1,41 +1,49 @@
 import { useState, useEffect, FC } from "react";
 import { nanoid } from "nanoid";
 import { Link, useHistory } from "react-router-dom";
+import { List, ListItemButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { List, Autocomplete, ListItemButton } from "@mui/material";
-import { Box, Typography, Container, TextField } from "@material-ui/core";
+import { Box, Button, Container, Typography } from "@material-ui/core";
 
+import {
+  fetchChatRooms,
+  resetChatRooms,
+  increaseRoomsOffset,
+} from "src/store/actions";
 import { useAuthorize } from "src/hooks";
-import { fetchChatRooms } from "src/store/actions";
-import { selectChatRooms } from "src/store/selectors";
+import { selectChatRoomsData } from "src/store/selectors";
 import { CREATE_ROOM_ROUTE, ROOMS_ROUTE } from "src/constants";
 import { BackLink, HelmetLayout, Loader } from "src/components";
 
 import useStyles from "./styles";
+import Searchbox from "./Searchbox";
 
 const Rooms: FC = () => {
   const [loadingRooms, setLoadingRooms] = useState(false);
-  const [searchFilter, setSearchFilter] = useState<string | null>(null);
 
   const styles = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const rooms = useSelector(selectChatRooms);
+  const { rooms, offset, limit, totalCount, searchFilter } =
+    useSelector(selectChatRoomsData);
 
   useAuthorize();
 
   useEffect(() => {
-    dispatch(fetchChatRooms(setLoadingRooms));
+    return () => {
+      dispatch(resetChatRooms());
+    };
   }, []);
 
-  const filteredRooms =
-    searchFilter !== null
-      ? rooms.filter((room) =>
-          room.name.toLowerCase().includes(searchFilter.trim().toLowerCase())
-        )
-      : rooms;
+  useEffect(() => {
+    dispatch(fetchChatRooms(offset, limit, searchFilter, setLoadingRooms));
+  }, [offset, limit, searchFilter]);
+
+  const handleShowMore = () => {
+    dispatch(increaseRoomsOffset());
+  };
 
   const links = (
     <Box className={styles.links_container}>
@@ -48,28 +56,11 @@ const Rooms: FC = () => {
     </Box>
   );
 
-  const searchBox = rooms && rooms.length > 0 && (
-    <Autocomplete
-      freeSolo
-      color="primary"
-      disableClearable
-      options={rooms.map((room) => room.name)}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Search"
-          margin="normal"
-          value={searchFilter}
-          onChange={(e) => setSearchFilter(e.target.value)}
-        />
-      )}
-    />
-  );
-
   const list =
-    filteredRooms.length > 0 ? (
+    (rooms.length !== 0 || !loadingRooms) &&
+    (rooms.length > 0 ? (
       <List>
-        {filteredRooms.map((room) => (
+        {rooms.map((room) => (
           <ListItemButton
             key={nanoid()}
             onClick={() => history.push(`${ROOMS_ROUTE}/${room._id}`)}
@@ -82,7 +73,13 @@ const Rooms: FC = () => {
       <Typography className={styles.no_rooms_text}>
         Nothing was found
       </Typography>
-    );
+    ));
+
+  const showMoreButton = !loadingRooms && rooms.length < totalCount && (
+    <Button color="primary" disabled={loadingRooms} onClick={handleShowMore}>
+      Show More
+    </Button>
+  );
 
   return (
     <HelmetLayout title="Rooms" description="Chat rooms page">
@@ -96,8 +93,18 @@ const Rooms: FC = () => {
           Rooms
         </Typography>
         {links}
-        {searchBox}
-        {loadingRooms && rooms.length === 0 ? <Loader loading={true} /> : list}
+        <Searchbox />
+        {searchFilter && (
+          <Typography>Showing matches for {`"${searchFilter}"`}</Typography>
+        )}
+        {list}
+        <Loader
+          loading={loadingRooms}
+          type={rooms.length === 0 ? "normal" : "list"}
+        />
+        <Box className={styles.show_more_button_container}>
+          {showMoreButton}
+        </Box>
       </Container>
     </HelmetLayout>
   );

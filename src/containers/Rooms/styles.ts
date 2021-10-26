@@ -23,9 +23,21 @@ const useStyles = makeStyles({
     margin: "0 -2px -5px 0",
     height: "22px !important",
   },
+  searchbox: {
+    gap: "6px",
+    display: "grid",
+    gridTemplateColumns: "auto 70px",
+  },
+  searchbox_button: {
+    margin: "16px 0 8px",
+  },
   no_rooms_text: {
     marginTop: "28px",
     textAlign: "center",
+  },
+  show_more_button_container: {
+    display: "flex",
+    justifyContent: "center",
   },
 });
 

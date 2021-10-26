@@ -1,2 +1,2 @@
 export { selectUserData } from "./user";
-export { selectChatMessages, selectChatRooms } from "./chat";
+export { selectChatRoomsData, selectChatMessages } from "./chat";

@@ -48,7 +48,7 @@ const Form: FC = () => {
       >
         Change Password
       </Typography>
-      <Loader loading={loading} isFormLoader />
+      <Loader loading={loading} type="form" />
       <ErrorsList errors={errors} setErrors={setErrors} />
       <TextField
         required

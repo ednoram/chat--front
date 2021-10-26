@@ -1,7 +1,7 @@
 import { useState, FC, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Box, Button, TextField, Typography } from "@material-ui/core";
+import { Box, Button, TextField } from "@material-ui/core";
 
 import { ErrorsList, Loader } from "src/components";
 import { changeRoomPassword } from "src/store/actions";
@@ -44,15 +44,7 @@ const ChangePasswordForm: FC<Props> = ({ roomId, chatRoute }) => {
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
-      <Typography
-        variant="h5"
-        component="h3"
-        color="primary"
-        className={styles.form_heading}
-      >
-        Change Password
-      </Typography>
-      <Loader loading={loading} isFormLoader />
+      <Loader loading={loading} type="form" />
       <ErrorsList errors={errors} setErrors={setErrors} />
       <TextField
         required

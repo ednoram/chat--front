@@ -1,13 +1,19 @@
 import { IMessage, IRoom, IUser } from "src/types";
 
-interface State {
+interface IState {
   user: {
     user: IUser | null;
   };
   chat: {
-    rooms: IRoom[];
+    rooms: {
+      limit: number;
+      offset: number;
+      rooms: IRoom[];
+      totalCount: number;
+      searchFilter: string;
+    };
     messages: IMessage[];
   };
 }
 
-export default State;
+export default IState;

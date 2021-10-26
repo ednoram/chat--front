@@ -1,7 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { theme } from "src/styles";
-
 const useStyles = makeStyles({
   container: {
     margin: "70px auto 140px",
@@ -16,19 +14,9 @@ const useStyles = makeStyles({
   back_link_container: {
     marginTop: "20px",
   },
-  links_container: {
-    gap: "20px",
-    display: "flex",
+  submit_form_button: {
     marginTop: "20px",
-    flexDirection: "column",
-  },
-  change_password_link: {
-    textDecoration: "none",
-    color: theme.palette.primary.main,
-  },
-  delete_link: {
-    textDecoration: "none",
-    color: theme.palette.secondary.main,
+    padding: "10px 20px",
   },
 });
 

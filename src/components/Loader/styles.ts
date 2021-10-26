@@ -8,10 +8,10 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
   form_loader_container: {
-    display: "flex",
-    marginTop: "24px",
-    alignItems: "center",
-    justifyContent: "center",
+    marginTop: "24px !important",
+  },
+  list_loader_container: {
+    marginTop: "0 !important",
   },
 });
 

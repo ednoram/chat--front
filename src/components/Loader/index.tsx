@@ -5,18 +5,20 @@ import useStyles from "./styles";
 
 interface Props {
   loading: boolean;
-  isFormLoader?: boolean;
+  type?: "form" | "list" | "normal";
 }
 
-const Loader: FC<Props> = ({ loading, isFormLoader }) => {
+const Loader: FC<Props> = ({ loading, type }) => {
   const styles = useStyles();
 
-  const containerClassName = isFormLoader
-    ? styles.form_loader_container
-    : styles.loader_container;
+  const containerClassNames = [
+    styles.loader_container,
+    type === "form" ? styles.form_loader_container : "",
+    type === "list" ? styles.list_loader_container : "",
+  ].join(" ");
 
   return loading ? (
-    <div className={containerClassName}>
+    <div className={containerClassNames}>
       <CircularProgress color="primary" />
     </div>
   ) : (

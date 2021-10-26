@@ -22,7 +22,10 @@ import {
   NotFoundContainer,
   EditRoomContainer,
   CreateRoomContainer,
+  DeleteRoomContainer,
   EditAccountContainer,
+  DeleteAllMessagesContainer,
+  ChangeRoomPasswordContainer,
 } from "src/containers";
 import { theme } from "src/styles";
 import { IMessage } from "src/types";
@@ -49,11 +52,6 @@ const App: FC = () => {
         <Switch>
           <Route
             exact
-            path={`${ROOMS_ROUTE}/:id/edit`}
-            component={EditRoomContainer}
-          />
-          <Route
-            exact
             path={CREATE_ROOM_ROUTE}
             component={CreateRoomContainer}
           />
@@ -61,6 +59,26 @@ const App: FC = () => {
             exact
             path={EDIT_ACCOUNT_ROUTE}
             component={EditAccountContainer}
+          />
+          <Route
+            exact
+            path={`${ROOMS_ROUTE}/:id/edit`}
+            component={EditRoomContainer}
+          />
+          <Route
+            exact
+            component={DeleteRoomContainer}
+            path={`${ROOMS_ROUTE}/:id/edit/delete-room`}
+          />
+          <Route
+            exact
+            component={ChangeRoomPasswordContainer}
+            path={`${ROOMS_ROUTE}/:id/edit/change-password`}
+          />
+          <Route
+            exact
+            component={DeleteAllMessagesContainer}
+            path={`${ROOMS_ROUTE}/:id/edit/delete-all-messages`}
           />
           <Route exact path="/" component={HomeContainer} />
           <Route exact path={ROOMS_ROUTE} component={RoomsContainer} />

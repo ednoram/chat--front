@@ -7,4 +7,7 @@ export { default as RegisterContainer } from "./Register";
 export { default as NotFoundContainer } from "./NotFound";
 export { default as EditRoomContainer } from "./EditRoom";
 export { default as CreateRoomContainer } from "./CreateRoom";
+export { default as DeleteRoomContainer } from "./DeleteRoom";
 export { default as EditAccountContainer } from "./EditAccount";
+export { default as DeleteAllMessagesContainer } from "./DeleteAllMessages";
+export { default as ChangeRoomPasswordContainer } from "./ChangeRoomPassword";

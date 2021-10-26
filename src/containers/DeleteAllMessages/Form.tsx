@@ -1,7 +1,7 @@
 import { useState, useEffect, FC, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Box, Button, TextField, Typography } from "@material-ui/core";
+import { Box, Button, TextField } from "@material-ui/core";
 
 import { deleteRoomMessages } from "src/store/actions";
 import { ErrorsList, ConfirmationDialog, Loader } from "src/components";
@@ -13,7 +13,7 @@ interface Props {
   chatRoute: string;
 }
 
-const DeleteMessagesForm: FC<Props> = ({ roomId, chatRoute }) => {
+const Form: FC<Props> = ({ roomId, chatRoute }) => {
   const [confirmed, setConfirmed] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [roomPassword, setRoomPassword] = useState("");
@@ -57,26 +57,14 @@ const DeleteMessagesForm: FC<Props> = ({ roomId, chatRoute }) => {
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      className={styles.delete_messages_form}
-    >
-      <Typography
-        variant="h5"
-        component="h3"
-        color="secondary"
-        className={styles.form_heading}
-      >
-        Delete Messages
-      </Typography>
-      <Loader loading={loading} isFormLoader />
+    <Box component="form" onSubmit={handleSubmit}>
+      <Loader loading={loading} type="form" />
       <ErrorsList errors={errors} setErrors={setErrors} />
       <ConfirmationDialog
         isOpen={dialogIsOpen}
         setIsOpen={setDialogIsOpen}
         setConfirmed={setConfirmed}
-        title="Are you sure you want to delete all messages?"
+        title="Are you sure you want to delete all messages of this room?"
         contentText="Clicking 'Yes' will permanently delete all messages of this room. This action can not be undone."
       />
       <TextField
@@ -103,4 +91,4 @@ const DeleteMessagesForm: FC<Props> = ({ roomId, chatRoute }) => {
   );
 };
 
-export default DeleteMessagesForm;
+export default Form;

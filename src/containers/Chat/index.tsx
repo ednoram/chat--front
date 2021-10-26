@@ -1,15 +1,13 @@
 import { useState, useEffect, FC } from "react";
+import { useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
-import { useDispatch, useSelector } from "react-redux";
+import { useParams, Link } from "react-router-dom";
 import { Typography, Container, Box } from "@material-ui/core";
-import { useParams, useHistory, Link } from "react-router-dom";
 
-import { IRoom } from "src/types";
 import { socket, ROOMS_ROUTE } from "src/constants";
 import { selectUserData } from "src/store/selectors";
-import { useAuthorize, useDisableBodyScroll } from "src/hooks";
 import { BackLink, HelmetLayout, Loader } from "src/components";
-import { getChatRoom, setChatMessages } from "src/store/actions";
+import { useAuthorize, useDisableBodyScroll, useFetchRoom } from "src/hooks";
 
 import Form from "./Form";
 import useStyles from "./styles";
@@ -17,33 +15,16 @@ import Messages from "./Messages";
 import RoomPasswordForm from "./RoomPasswordForm";
 
 const Chat: FC = () => {
-  const [room, setRoom] = useState<IRoom | null>(null);
   const [roomPassword, setRoomPassword] = useState<string | null>(null);
 
   const styles = useStyles();
-  const history = useHistory();
-  const dispatch = useDispatch();
   const user = useSelector(selectUserData);
   const { id: roomId }: { id: string } = useParams();
 
+  const room = useFetchRoom(roomId);
+
   useAuthorize();
   useDisableBodyScroll(!roomPassword);
-
-  useEffect(() => {
-    dispatch(setChatMessages([]));
-
-    const fetchRoom = async () => {
-      const chatRoom = await getChatRoom(roomId);
-
-      if (!chatRoom) {
-        history.push(ROOMS_ROUTE);
-      } else {
-        setRoom(chatRoom);
-      }
-    };
-
-    fetchRoom();
-  }, []);
 
   useEffect(() => {
     if (roomId && roomPassword) {

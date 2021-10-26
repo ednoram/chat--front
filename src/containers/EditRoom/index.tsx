@@ -1,54 +1,46 @@
-import { useState, useEffect, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { FC } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Box, Container, Typography } from "@material-ui/core";
 
-import { IRoom } from "src/types";
-import { useAuthorize } from "src/hooks";
 import { ROOMS_ROUTE } from "src/constants";
-import { selectUserData } from "src/store/selectors";
 import { BackLink, HelmetLayout } from "src/components";
-import { getChatRoom, setChatMessages } from "src/store/actions";
+import { useAuthorize, useFetchRoom, useRestrictEditingRoom } from "src/hooks";
 
 import useStyles from "./styles";
-import ChangePasswordForm from "./ChangePasswordForm";
-import DeleteMessagesForm from "./DeleteMessagesForm";
 
 const EditRoom: FC = () => {
-  const [room, setRoom] = useState<IRoom | null>(null);
-
   const styles = useStyles();
-  const history = useHistory();
-  const dispatch = useDispatch();
   const { id: roomId }: { id: string } = useParams();
 
-  const user = useSelector(selectUserData);
+  const room = useFetchRoom(roomId);
 
   useAuthorize();
-
-  useEffect(() => {
-    dispatch(setChatMessages([]));
-
-    const fetchRoom = async () => {
-      const chatRoom = await getChatRoom(roomId);
-
-      if (!chatRoom) {
-        history.push(ROOMS_ROUTE);
-      } else {
-        setRoom(chatRoom);
-      }
-    };
-
-    fetchRoom();
-  }, []);
-
-  useEffect(() => {
-    if (user && room && room.adminId !== user._id) {
-      history.push("/");
-    }
-  }, [user, room]);
+  useRestrictEditingRoom(room);
 
   const chatRoute = `${ROOMS_ROUTE}/${roomId}`;
+  const deleteRoomRoute = `${ROOMS_ROUTE}/${roomId}/edit/delete-room`;
+  const changePasswordRoute = `${ROOMS_ROUTE}/${roomId}/edit/change-password`;
+  const deleteAllMessagesRoute = `${ROOMS_ROUTE}/${roomId}/edit/delete-all-messages`;
+
+  const links = (
+    <Box className={styles.links_container}>
+      <Typography>
+        <Link to={changePasswordRoute} className={styles.change_password_link}>
+          Change Room Password
+        </Link>
+      </Typography>
+      <Typography>
+        <Link to={deleteAllMessagesRoute} className={styles.delete_link}>
+          Delete All Messages
+        </Link>
+      </Typography>
+      <Typography>
+        <Link to={deleteRoomRoute} className={styles.delete_link}>
+          Delete Room
+        </Link>
+      </Typography>
+    </Box>
+  );
 
   return (
     <HelmetLayout title="Edit Room" description="Edit Room page">
@@ -65,14 +57,9 @@ const EditRoom: FC = () => {
           Room: {room?.name}
         </Typography>
         <Box className={styles.back_link_container}>
-          <BackLink route={chatRoute} text="Cancel" />
+          <BackLink route={chatRoute} text="Chat" />
         </Box>
-        <section>
-          <ChangePasswordForm roomId={roomId} chatRoute={chatRoute} />
-        </section>
-        <section>
-          <DeleteMessagesForm roomId={roomId} chatRoute={chatRoute} />
-        </section>
+        {links}
       </Container>
     </HelmetLayout>
   );

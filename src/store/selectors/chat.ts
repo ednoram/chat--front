@@ -1,6 +1,14 @@
-import { IMessage, IRoom, State } from "src/types";
+import { IMessage, IRoom, IState } from "src/types";
 
-export const selectChatMessages = (state: State): IMessage[] =>
+export const selectChatRoomsData = (
+  state: IState
+): {
+  limit: number;
+  offset: number;
+  rooms: IRoom[];
+  totalCount: number;
+  searchFilter: string;
+} => state.chat.rooms;
+
+export const selectChatMessages = (state: IState): IMessage[] =>
   state.chat.messages;
-
-export const selectChatRooms = (state: State): IRoom[] => state.chat.rooms;

@@ -6,14 +6,17 @@ export {
   changeUserPassword,
 } from "./user";
 export {
+  deleteRoom,
   getChatRoom,
   postMessage,
-  setChatRooms,
   postChatRoom,
   fetchMessages,
+  resetChatRooms,
   addChatMessage,
   fetchChatRooms,
   setChatMessages,
   changeRoomPassword,
   deleteRoomMessages,
+  increaseRoomsOffset,
+  setRoomsSearchFilter,
 } from "./chat";

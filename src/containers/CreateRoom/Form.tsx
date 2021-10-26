@@ -34,7 +34,7 @@ const Form: FC = () => {
 
   return (
     <Box component="form" onSubmit={handleSubmit} className={styles.form}>
-      <Loader loading={loading} isFormLoader />
+      <Loader loading={loading} type="form" />
       <ErrorsList errors={errors} setErrors={setErrors} />
       <TextField
         required
