@@ -17,6 +17,7 @@ import {
   SET_TOTAL_ROOMS_COUNT,
   INCREASE_ROOMS_OFFSET,
   SET_ROOMS_SEARCH_FILTER,
+  SET_TOTAL_MESSAGES_COUNT,
 } from "src/store/reducers/chat";
 import { IMessage, IRoom } from "src/types";
 import { API, ROOMS_ROUTE } from "src/constants";
@@ -39,6 +40,9 @@ const setTotalRoomsCount = (totalCount: number): Action =>
 
 export const addChatMessage = (message: IMessage): Action =>
   createAction(ADD_MESSAGE, { message });
+
+const setTotalMessagesCount = (totalCount: number): Action =>
+  createAction(SET_TOTAL_MESSAGES_COUNT, { totalCount });
 
 export const setChatMessages = (messages: IMessage[]): Action =>
   createAction(SET_MESSAGES, { messages });
@@ -124,9 +128,12 @@ export const fetchMessages =
   (
     roomId: string,
     roomPassword: string,
+    offset: number,
+    limit: number,
     setLoading: ReactDispatch<SetStateAction<boolean>>,
+    setErrors: ReactDispatch<SetStateAction<string[]>>,
     setSuccess: ReactDispatch<SetStateAction<boolean>>,
-    setErrors: ReactDispatch<SetStateAction<string[]>>
+    messages?: IMessage[]
   ) =>
   async (dispatch: Dispatch): Promise<void> => {
     setErrors([]);
@@ -134,11 +141,16 @@ export const fetchMessages =
 
     try {
       const { data } = await API.get("api/messages", {
-        params: { roomId, roomPassword },
+        params: { roomId, roomPassword, offset, limit },
       });
 
       if (data) {
-        dispatch(setChatMessages(data));
+        const newMessages = messages
+          ? [...data.messages, ...messages]
+          : data.messages;
+
+        dispatch(setChatMessages(newMessages));
+        dispatch(setTotalMessagesCount(data.totalCount));
         setSuccess(true);
       } else {
         alert("Something went wrong");
@@ -151,8 +163,14 @@ export const fetchMessages =
   };
 
 export const postMessage =
-  (message: IMessage, emitMessage: (message: IMessage) => void) =>
+  (
+    message: IMessage,
+    emitMessage: (message: IMessage) => void,
+    setLoading: ReactDispatch<SetStateAction<boolean>>
+  ) =>
   async (dispatch: Dispatch): Promise<void> => {
+    setLoading(true);
+
     try {
       const token = getTokenCookie();
       const { text, roomId } = message;
@@ -168,6 +186,8 @@ export const postMessage =
     } catch {
       alert("Something went wrong");
     }
+
+    setLoading(false);
   };
 
 export const changeRoomPassword =

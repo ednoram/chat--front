@@ -10,5 +10,11 @@ export const selectChatRoomsData = (
   searchFilter: string;
 } => state.chat.rooms;
 
-export const selectChatMessages = (state: IState): IMessage[] =>
-  state.chat.messages;
+export const selectChatMessagesData = (
+  state: IState
+): {
+  limit: number;
+  offset: number;
+  totalCount: number;
+  messages: IMessage[];
+} => state.chat.messages;

@@ -6,7 +6,7 @@ import { Typography, Container, Box } from "@material-ui/core";
 
 import { socket, ROOMS_ROUTE } from "src/constants";
 import { selectUserData } from "src/store/selectors";
-import { BackLink, HelmetLayout, Loader } from "src/components";
+import { BackLink, HelmetLayout } from "src/components";
 import { useAuthorize, useDisableBodyScroll, useFetchRoom } from "src/hooks";
 
 import Form from "./Form";
@@ -16,7 +16,6 @@ import RoomPasswordForm from "./RoomPasswordForm";
 
 const Chat: FC = () => {
   const [roomPassword, setRoomPassword] = useState<string | null>(null);
-
   const styles = useStyles();
   const user = useSelector(selectUserData);
   const { id: roomId }: { id: string } = useParams();
@@ -32,17 +31,16 @@ const Chat: FC = () => {
     }
   }, [roomId, roomPassword]);
 
-  const loading = !room?.name;
   const userIsAdmin = user && room?.adminId === user?._id;
 
-  const roomNameDiv = (
+  const roomNameDiv = room?.name && (
     <Typography
       variant="h6"
       component="h2"
       color="primary"
       className={styles.room_text}
     >
-      Room: {room?.name}
+      Room: {room.name}
     </Typography>
   );
 
@@ -58,13 +56,18 @@ const Chat: FC = () => {
     </Typography>
   );
 
-  const chatDiv = !loading ? (
+  const links = room && (
+    <Box className={styles.links_container}>
+      <BackLink route={ROOMS_ROUTE} text="Rooms" />
+      {editRoomLink}
+    </Box>
+  );
+
+  const chatDiv = room && (
     <div>
-      <Messages />
+      <Messages roomId={roomId} roomPassword={roomPassword} />
       <Form roomId={roomId} />
     </div>
-  ) : (
-    <Loader loading={true} />
   );
 
   return (
@@ -81,16 +84,13 @@ const Chat: FC = () => {
         >
           Chat
         </Typography>
-        {!loading && roomNameDiv}
+        {roomNameDiv}
         {userIsAdmin && (
           <Typography className={styles.admin_text}>
             (you are the admin)
           </Typography>
         )}
-        <Box className={styles.links_container}>
-          <BackLink route={ROOMS_ROUTE} text="Rooms" />
-          {editRoomLink}
-        </Box>
+        {links}
         {chatDiv}
       </Container>
     </HelmetLayout>

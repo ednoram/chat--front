@@ -12,7 +12,12 @@ interface IState {
       totalCount: number;
       searchFilter: string;
     };
-    messages: IMessage[];
+    messages: {
+      limit: number;
+      offset: number;
+      totalCount: number;
+      messages: IMessage[];
+    };
   };
 }
 

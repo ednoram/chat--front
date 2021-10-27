@@ -12,7 +12,7 @@ const HelmetLayout: FC<Props> = ({ title, children, description }) => (
       <title>{title}</title>
       <meta name="description" content={description} />
     </Helmet>
-    {children}
+    <main>{children}</main>
   </>
 );
 

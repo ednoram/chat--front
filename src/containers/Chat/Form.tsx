@@ -15,6 +15,7 @@ interface Props {
 }
 
 const Form: FC<Props> = ({ roomId }) => {
+  const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
   const user = useSelector(selectUserData);
@@ -29,7 +30,7 @@ const Form: FC<Props> = ({ roomId }) => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    if (!user || !inputValue.trim()) return;
+    if (loading || !user || !inputValue.trim()) return;
 
     const message: IMessage = {
       roomId,
@@ -39,7 +40,7 @@ const Form: FC<Props> = ({ roomId }) => {
     };
 
     if (message.text && message.username) {
-      dispatch(postMessage(message, emitMessage));
+      dispatch(postMessage(message, emitMessage, setLoading));
       setInputValue("");
     }
   };
@@ -59,6 +60,7 @@ const Form: FC<Props> = ({ roomId }) => {
         <Button
           type="submit"
           color="primary"
+          disabled={loading}
           variant="contained"
           aria-label="send message"
         >

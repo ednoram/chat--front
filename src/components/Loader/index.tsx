@@ -5,13 +5,15 @@ import useStyles from "./styles";
 
 interface Props {
   loading: boolean;
+  className?: string;
   type?: "form" | "list" | "normal";
 }
 
-const Loader: FC<Props> = ({ loading, type }) => {
+const Loader: FC<Props> = ({ loading, type, className }) => {
   const styles = useStyles();
 
   const containerClassNames = [
+    className,
     styles.loader_container,
     type === "form" ? styles.form_loader_container : "",
     type === "list" ? styles.list_loader_container : "",

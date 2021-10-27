@@ -1,23 +1,85 @@
-import { useEffect, useRef, FC } from "react";
+import { useState, useEffect, useRef, FC } from "react";
 import { nanoid } from "nanoid";
-import { useSelector } from "react-redux";
-import { Box, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
 
-import { selectUserData, selectChatMessages } from "src/store/selectors";
+import { useScrollPosition } from "src/hooks";
+import { fetchMessages } from "src/store/actions";
+import { ErrorsList, Loader } from "src/components";
+import { selectUserData, selectChatMessagesData } from "src/store/selectors";
 
 import useStyles from "./styles";
 
-const Messages: FC = () => {
-  const styles = useStyles();
+interface Props {
+  roomId: string;
+  roomPassword: string | null;
+}
+
+const Messages: FC<Props> = ({ roomId, roomPassword }) => {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [divHeightCache, setDivHeightCache] = useState<number | null>(null);
 
   const user = useSelector(selectUserData);
-  const messages = useSelector(selectChatMessages);
+  const { messages, offset, limit, totalCount } = useSelector(
+    selectChatMessagesData
+  );
 
+  const messagesDivRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const styles = useStyles();
+  const dispatch = useDispatch();
+  const scrollPosition = useScrollPosition(messagesDivRef);
+
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ block: "nearest" });
+    if (
+      scrollPosition === 0 &&
+      messages.length < totalCount &&
+      !loading &&
+      !success &&
+      roomId &&
+      roomPassword
+    ) {
+      dispatch(
+        fetchMessages(
+          roomId,
+          roomPassword,
+          offset,
+          limit,
+          setLoading,
+          setErrors,
+          setSuccess,
+          messages
+        )
+      );
+    }
+  }, [scrollPosition]);
+
+  useEffect(() => {
+    if (divHeightCache && messagesDivRef?.current && scrolled && !success) {
+      if (messagesDivRef.current.scrollTop === 0) {
+        messagesDivRef.current.scrollTop =
+          messagesDivRef.current.scrollHeight - divHeightCache - 80;
+      } else {
+        scrollToTheEnd();
+      }
+    }
+
+    if (messages.length > 0 && !scrolled) {
+      scrollToTheEnd();
+      setScrolled(true);
+    }
+
+    setDivHeightCache(messagesDivRef?.current?.scrollHeight || null);
+    setTimeout(() => setSuccess(false));
   }, [messages]);
+
+  const scrollToTheEnd = () => {
+    messagesEndRef.current?.scrollIntoView({ block: "nearest" });
+  };
 
   const getMessageDate = (date: Date) =>
     new Date(date).toLocaleTimeString("en", {
@@ -25,10 +87,12 @@ const Messages: FC = () => {
     });
 
   return (
-    <div className={styles.messages_div}>
+    <div ref={messagesDivRef} className={styles.messages_div}>
+      <ErrorsList errors={errors} setErrors={setErrors} />
+      <Loader loading={loading} className={styles.more_messages_loader} />
       {messages && messages.length > 0 ? (
         messages.map((message) => (
-          <Box
+          <div
             key={nanoid()}
             className={[
               styles.message_div,
@@ -51,7 +115,7 @@ const Messages: FC = () => {
             <Typography className={styles.message_time}>
               {getMessageDate(message?.createdAt)}
             </Typography>
-          </Box>
+          </div>
         ))
       ) : (
         <Typography className={styles.no_messages_text}>No messages</Typography>

@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
   messages_div: {
     gap: "6px",
-    height: "440px",
+    height: "500px",
     display: "flex",
     padding: "0 8px",
     marginTop: "20px",
@@ -55,6 +55,7 @@ const useStyles = makeStyles({
   },
   message_div: {
     maxWidth: "80%",
+    minWidth: "10%",
     marginLeft: "0",
     marginRight: "auto",
     borderRadius: "8px",
@@ -82,6 +83,9 @@ const useStyles = makeStyles({
     textAlign: "right",
     fontSize: "0.75rem",
   },
+  more_messages_loader: {
+    margin: "10px 0 !important",
+  },
   form_div: {
     gap: "8px",
     display: "flex",
@@ -106,6 +110,9 @@ const useStyles = makeStyles({
     borderRadius: "8px",
     marginBottom: "50px",
     padding: "16px 20px",
+  },
+  room_password_form_loader: {
+    marginBottom: "80px",
   },
   room_password_error: {
     paddingLeft: "4px",

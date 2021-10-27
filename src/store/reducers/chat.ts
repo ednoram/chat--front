@@ -8,7 +8,12 @@ interface State {
     totalCount: number;
     searchFilter: string;
   };
-  messages: IMessage[];
+  messages: {
+    limit: number;
+    offset: number;
+    totalCount: number;
+    messages: IMessage[];
+  };
 }
 
 export interface Action {
@@ -34,6 +39,7 @@ export const CHANGE_ROOM_PASSWORD = "CHANGE_ROOM_PASSWORD";
 export const INCREASE_ROOMS_OFFSET = "INCREASE_ROOMS_OFFSET";
 export const SET_TOTAL_ROOMS_COUNT = "SET_TOTAL_ROOMS_COUNT";
 export const SET_ROOMS_SEARCH_FILTER = "SET_ROOMS_SEARCH_FILTER";
+export const SET_TOTAL_MESSAGES_COUNT = "SET_TOTAL_MESSAGES_COUNT";
 
 const INITIAL_STATE: State = {
   rooms: {
@@ -43,7 +49,12 @@ const INITIAL_STATE: State = {
     totalCount: 0,
     searchFilter: "",
   },
-  messages: [],
+  messages: {
+    limit: 10,
+    offset: 0,
+    messages: [],
+    totalCount: 0,
+  },
 };
 
 const chatReducer = (
@@ -59,12 +70,26 @@ const chatReducer = (
 
     case SET_MESSAGES:
       return payload.messages
-        ? { ...state, messages: payload.messages }
+        ? {
+            ...state,
+            messages: {
+              ...state.messages,
+              messages: payload.messages,
+              offset: payload.messages.length,
+            },
+          }
         : state;
 
     case ADD_MESSAGE:
       return payload.message
-        ? { ...state, messages: [...state.messages, payload.message] }
+        ? {
+            ...state,
+            messages: {
+              ...state.messages,
+              offset: state.messages.offset + 1,
+              messages: [...state.messages.messages, payload.message],
+            },
+          }
         : state;
 
     case ADD_ROOMS:
@@ -91,7 +116,21 @@ const chatReducer = (
       return payload.totalCount !== undefined
         ? {
             ...state,
-            rooms: { ...state.rooms, totalCount: payload.totalCount },
+            rooms: {
+              ...state.rooms,
+              totalCount: payload.totalCount,
+            },
+          }
+        : state;
+
+    case SET_TOTAL_MESSAGES_COUNT:
+      return payload.totalCount !== undefined
+        ? {
+            ...state,
+            messages: {
+              ...state.messages,
+              totalCount: payload.totalCount,
+            },
           }
         : state;
 
