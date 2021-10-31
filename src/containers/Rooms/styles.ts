@@ -31,6 +31,12 @@ const useStyles = makeStyles({
   searchbox_button: {
     margin: "16px 0 8px",
   },
+  clear_search_filter_icon: {
+    paddingLeft: "3px",
+    cursor: "pointer",
+    marginBottom: "-7px",
+    fill: `${theme.palette.secondary.main} !important`,
+  },
   no_rooms_text: {
     marginTop: "28px",
     textAlign: "center",

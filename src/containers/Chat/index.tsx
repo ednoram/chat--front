@@ -16,6 +16,7 @@ import RoomPasswordForm from "./RoomPasswordForm";
 
 const Chat: FC = () => {
   const [roomPassword, setRoomPassword] = useState<string | null>(null);
+
   const styles = useStyles();
   const user = useSelector(selectUserData);
   const { id: roomId }: { id: string } = useParams();

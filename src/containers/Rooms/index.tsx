@@ -1,5 +1,6 @@
 import { useState, useEffect, FC } from "react";
 import { nanoid } from "nanoid";
+import ClearIcon from "@mui/icons-material/Clear";
 import { Link, useHistory } from "react-router-dom";
 import { List, ListItemButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +11,7 @@ import {
   fetchChatRooms,
   resetChatRooms,
   increaseRoomsOffset,
+  setRoomsSearchFilter,
 } from "src/store/actions";
 import { useAuthorize } from "src/hooks";
 import { selectChatRoomsData } from "src/store/selectors";
@@ -45,6 +47,10 @@ const Rooms: FC = () => {
     dispatch(increaseRoomsOffset());
   };
 
+  const clearSearchFilter = () => {
+    dispatch(setRoomsSearchFilter(""));
+  };
+
   const links = (
     <Box className={styles.links_container}>
       <BackLink route="/" text="Home" />
@@ -54,6 +60,16 @@ const Rooms: FC = () => {
         </Link>
       </Typography>
     </Box>
+  );
+
+  const searchFilterText = searchFilter && (
+    <Typography>
+      Showing matches for {`"${searchFilter}"`}
+      <ClearIcon
+        onClick={() => clearSearchFilter()}
+        className={styles.clear_search_filter_icon}
+      />
+    </Typography>
   );
 
   const list =
@@ -94,9 +110,7 @@ const Rooms: FC = () => {
         </Typography>
         {links}
         <Searchbox />
-        {searchFilter && (
-          <Typography>Showing matches for {`"${searchFilter}"`}</Typography>
-        )}
+        {searchFilterText}
         {list}
         <Loader
           loading={loadingRooms}

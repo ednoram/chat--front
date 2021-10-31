@@ -105,7 +105,6 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
   room_password_form: {
-    width: "380px",
     background: "white",
     borderRadius: "8px",
     marginBottom: "50px",

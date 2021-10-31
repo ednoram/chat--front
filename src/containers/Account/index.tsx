@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,14 +22,11 @@ const Account: FC = () => {
   };
 
   const userInfo = user ? (
-    <Stack spacing={2} className={styles.user_info}>
+    <div className={styles.user_info}>
       <Typography variant="h5" component="p">
         Username: {user.username}
       </Typography>
-      <Typography variant="h5" component="p">
-        ID: {user._id}
-      </Typography>
-    </Stack>
+    </div>
   ) : (
     <Loader loading={true} />
   );

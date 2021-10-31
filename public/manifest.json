@@ -1,9 +1,23 @@
 {
+  "name": "Chat",
   "short_name": "Chat",
-  "name": "Chat App",
-  "icons": [],
-  "start_url": ".",
+  "description": "A website for messaging.",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "theme_color": "#00838F",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/logo_192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/logo_512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ]
 }

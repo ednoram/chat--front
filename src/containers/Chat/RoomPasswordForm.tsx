@@ -6,10 +6,15 @@ import {
   useEffect,
   SetStateAction,
 } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import { nanoid } from "nanoid";
-import { TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, Container, Typography } from "@material-ui/core";
 
 import { IRoom } from "src/types";
 import { ROOMS_ROUTE } from "src/constants";

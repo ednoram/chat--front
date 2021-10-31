@@ -1,28 +1,38 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { theme } from "src/styles";
-
 const useStyles = makeStyles({
   container: {
-    margin: "70px auto 140px",
+    margin: "90px auto 140px",
+  },
+  logo_and_title: {
+    gap: "8px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logo: {
+    transform: "scale(0.8)",
   },
   title: {
+    paddingBottom: "10px",
     fontWeight: "bold",
     textAlign: "center",
   },
-  content: {
-    gap: "28px",
+  username_text: {
+    textAlign: "center",
+  },
+  links_list: {
+    gap: "10px",
     display: "flex",
     marginTop: "20px",
     textAlign: "center",
     flexDirection: "column",
+  },
+  links_list_item: {
+    display: "flex",
     justifyContent: "center",
   },
-  account_link: {
-    textDecoration: "none",
-    color: theme.palette.primary.main,
-  },
-  rooms_link: {
+  link: {
     color: "black",
     textDecoration: "none",
   },
