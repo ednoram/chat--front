@@ -38,7 +38,7 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
   useEffect(() => {
     if (
       scrollPosition !== null &&
-      Math.floor(scrollPosition) <= 0 &&
+      scrollPosition === 0 &&
       messages.length < totalCount &&
       !loading &&
       !success &&

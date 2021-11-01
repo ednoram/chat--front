@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Typography, Container, List, ListItem } from "@material-ui/core";
 
 import { useAuthorize } from "src/hooks";
-import { HelmetLayout } from "src/components";
+import { HelmetLayout, Loader } from "src/components";
 import { selectUserData } from "src/store/selectors";
 import { ACCOUNT_ROUTE, ROOMS_ROUTE } from "src/constants";
 import { ReactComponent as Logo } from "src/assets/logo.svg";
@@ -40,8 +40,21 @@ const Home: FC = () => {
     </List>
   );
 
+  const usernameText = user ? (
+    <Typography
+      variant="h4"
+      component="h2"
+      color="primary"
+      className={styles.username_text}
+    >
+      {user?.username}
+    </Typography>
+  ) : (
+    <Loader loading={true} type="list" />
+  );
+
   return (
-    <HelmetLayout title="Home" description="Home page">
+    <HelmetLayout title="Home" description="A website for messaging.">
       <Container maxWidth="sm" className={styles.container}>
         <div className={styles.logo_and_title}>
           <Logo className={styles.logo} />
@@ -54,14 +67,7 @@ const Home: FC = () => {
             Chat
           </Typography>
         </div>
-        <Typography
-          variant="h4"
-          component="h2"
-          color="primary"
-          className={styles.username_text}
-        >
-          {user?.username}
-        </Typography>
+        {usernameText}
         {linksList}
       </Container>
     </HelmetLayout>
