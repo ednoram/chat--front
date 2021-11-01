@@ -77,12 +77,7 @@ const Room: FC = () => {
         >
           Room
         </Typography>
-        <Typography
-          variant="h6"
-          component="h2"
-          color="primary"
-          className={styles.room_name}
-        >
+        <Typography variant="h6" component="h2" className={styles.room_name}>
           {room?.name}
         </Typography>
         {userIsAdmin && (

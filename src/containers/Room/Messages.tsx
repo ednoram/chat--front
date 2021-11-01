@@ -38,7 +38,7 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
   useEffect(() => {
     if (
       scrollPosition !== null &&
-      scrollPosition < 50 &&
+      scrollPosition < 10 &&
       messages.length < totalCount &&
       !loading &&
       !success &&
@@ -62,7 +62,7 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
 
   useEffect(() => {
     if (divHeightCache && messagesDivRef?.current && scrolled && !success) {
-      if (messagesDivRef.current.scrollTop < 50) {
+      if (messagesDivRef.current.scrollTop < 10) {
         messagesDivRef.current.scrollTop =
           messagesDivRef.current.scrollHeight - divHeightCache - 80;
       } else {

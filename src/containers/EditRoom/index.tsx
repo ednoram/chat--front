@@ -17,7 +17,7 @@ const EditRoom: FC = () => {
   useAuthorize();
   useRestrictEditingRoom(room);
 
-  const chatRoute = `${ROOMS_ROUTE}/${roomId}`;
+  const roomRoute = `${ROOMS_ROUTE}/${roomId}`;
   const deleteRoomRoute = `${ROOMS_ROUTE}/${roomId}/edit/delete-room`;
   const changePasswordRoute = `${ROOMS_ROUTE}/${roomId}/edit/change-password`;
   const deleteAllMessagesRoute = `${ROOMS_ROUTE}/${roomId}/edit/delete-all-messages`;
@@ -54,10 +54,10 @@ const EditRoom: FC = () => {
           Edit Room
         </Typography>
         <Typography variant="h6" component="h2" className={styles.room_name}>
-          Room: {room?.name}
+          {room?.name}
         </Typography>
         <Box className={styles.back_link_container}>
-          <BackLink route={chatRoute} text="Chat" />
+          <BackLink route={roomRoute} text="Room" />
         </Box>
         {links}
       </Container>
