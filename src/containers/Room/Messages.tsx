@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, FC } from "react";
 import { nanoid } from "nanoid";
 import { Typography } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
+import { elementScrollIntoView } from "seamless-scroll-polyfill";
 
 import { useScrollPosition } from "src/hooks";
 import { fetchMessages } from "src/store/actions";
@@ -36,7 +37,8 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
 
   useEffect(() => {
     if (
-      scrollPosition === 0 &&
+      scrollPosition !== null &&
+      scrollPosition < 50 &&
       messages.length < totalCount &&
       !loading &&
       !success &&
@@ -60,7 +62,7 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
 
   useEffect(() => {
     if (divHeightCache && messagesDivRef?.current && scrolled && !success) {
-      if (messagesDivRef.current.scrollTop === 0) {
+      if (messagesDivRef.current.scrollTop < 50) {
         messagesDivRef.current.scrollTop =
           messagesDivRef.current.scrollHeight - divHeightCache - 80;
       } else {
@@ -78,7 +80,9 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
   }, [messages]);
 
   const scrollToTheEnd = () => {
-    messagesEndRef.current?.scrollIntoView({ block: "nearest" });
+    if (messagesEndRef.current) {
+      elementScrollIntoView(messagesEndRef.current, { block: "nearest" });
+    }
   };
 
   const getMessageDate = (date: Date) =>
