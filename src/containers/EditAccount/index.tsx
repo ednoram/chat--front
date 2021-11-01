@@ -17,7 +17,7 @@ const EditAccount: FC = () => {
     <HelmetLayout title="Edit Account" description="Edit account page">
       <Container maxWidth="xs" className={styles.container}>
         <Typography
-          variant="h3"
+          variant="h4"
           component="h1"
           color="primary"
           className={styles.title}

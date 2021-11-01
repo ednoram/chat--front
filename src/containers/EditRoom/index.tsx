@@ -46,7 +46,7 @@ const EditRoom: FC = () => {
     <HelmetLayout title="Edit Room" description="Edit Room page">
       <Container maxWidth="xs" className={styles.container}>
         <Typography
-          variant="h3"
+          variant="h4"
           component="h1"
           color="primary"
           className={styles.title}

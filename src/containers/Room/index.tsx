@@ -14,7 +14,7 @@ import useStyles from "./styles";
 import Messages from "./Messages";
 import RoomPasswordForm from "./RoomPasswordForm";
 
-const Chat: FC = () => {
+const Room: FC = () => {
   const [roomPassword, setRoomPassword] = useState<string | null>(null);
 
   const styles = useStyles();
@@ -33,17 +33,6 @@ const Chat: FC = () => {
   }, [roomId, roomPassword]);
 
   const userIsAdmin = user && room?.adminId === user?._id;
-
-  const roomNameDiv = room?.name && (
-    <Typography
-      variant="h6"
-      component="h2"
-      color="primary"
-      className={styles.room_text}
-    >
-      Room: {room.name}
-    </Typography>
-  );
 
   const editRoomLink = userIsAdmin && (
     <Typography>
@@ -72,20 +61,30 @@ const Chat: FC = () => {
   );
 
   return (
-    <HelmetLayout title="Chat" description="Chat page">
+    <HelmetLayout
+      description="Room page"
+      title={`Room: ${room ? room.name : ""}`}
+    >
       {!roomPassword && (
         <RoomPasswordForm room={room} setRoomPassword={setRoomPassword} />
       )}
       <Container maxWidth="sm" className={styles.container}>
         <Typography
-          variant="h3"
+          variant="h4"
           component="h1"
           color="primary"
           className={styles.title}
         >
-          Chat
+          Room
         </Typography>
-        {roomNameDiv}
+        <Typography
+          variant="h6"
+          component="h2"
+          color="primary"
+          className={styles.room_name}
+        >
+          {room?.name}
+        </Typography>
         {userIsAdmin && (
           <Typography className={styles.admin_text}>
             (you are the admin)
@@ -98,4 +97,4 @@ const Chat: FC = () => {
   );
 };
 
-export default Chat;
+export default Room;

@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { Typography, Container, List, ListItem } from "@material-ui/core";
 
 import { useAuthorize } from "src/hooks";
+import { HelmetLayout } from "src/components";
 import { selectUserData } from "src/store/selectors";
-import { HelmetLayout, Loader } from "src/components";
 import { ACCOUNT_ROUTE, ROOMS_ROUTE } from "src/constants";
 import { ReactComponent as Logo } from "src/assets/logo.svg";
 
@@ -62,7 +62,6 @@ const Home: FC = () => {
         >
           {user?.username}
         </Typography>
-        {/* <Loader loading={!user} /> */}
         {linksList}
       </Container>
     </HelmetLayout>

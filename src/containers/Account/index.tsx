@@ -23,7 +23,7 @@ const Account: FC = () => {
 
   const userInfo = user ? (
     <div className={styles.user_info}>
-      <Typography variant="h5" component="p">
+      <Typography variant="h6" component="p">
         Username: {user.username}
       </Typography>
     </div>
@@ -47,7 +47,7 @@ const Account: FC = () => {
     <HelmetLayout title="Account" description="Account page">
       <Container maxWidth="sm" className={styles.container}>
         <Typography
-          variant="h3"
+          variant="h4"
           component="h1"
           color="primary"
           className={styles.title}

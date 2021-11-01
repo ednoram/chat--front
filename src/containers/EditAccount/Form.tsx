@@ -41,7 +41,7 @@ const Form: FC = () => {
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <Typography
-        variant="h4"
+        variant="h5"
         component="h3"
         color="primary"
         className={styles.form_heading}

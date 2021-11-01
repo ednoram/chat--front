@@ -4,13 +4,13 @@ import { theme } from "src/styles";
 
 const useStyles = makeStyles({
   container: {
-    margin: "60px auto 110px",
+    margin: "60px auto 100px",
   },
   title: {
     fontWeight: "bold",
     textAlign: "center",
   },
-  room_text: {
+  room_name: {
     textAlign: "center",
   },
   admin_text: {
@@ -31,10 +31,12 @@ const useStyles = makeStyles({
   },
   messages_div: {
     gap: "6px",
-    height: "500px",
+    height: "60vh",
     display: "flex",
     padding: "0 8px",
     marginTop: "20px",
+    minHeight: "400px",
+    maxHeight: "700px",
     overflowY: "scroll",
     overflowX: "hidden",
     flexDirection: "column",
@@ -100,15 +102,17 @@ const useStyles = makeStyles({
     position: "fixed",
     placeItems: "center",
     background: "rgba(0, 0, 0, 0.3)",
-  },
-  room_password_name: {
-    textAlign: "center",
+    padding: "0 20px",
+    boxSizing: "border-box",
   },
   room_password_form: {
     background: "white",
     borderRadius: "8px",
     marginBottom: "50px",
     padding: "16px 20px",
+  },
+  room_password_name: {
+    textAlign: "center",
   },
   room_password_form_loader: {
     marginBottom: "80px",

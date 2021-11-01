@@ -13,7 +13,7 @@ import {
   EDIT_ACCOUNT_ROUTE,
 } from "src/constants";
 import {
-  ChatContainer,
+  RoomContainer,
   HomeContainer,
   LoginContainer,
   RoomsContainer,
@@ -87,7 +87,7 @@ const App: FC = () => {
           <Route exact path={LOGIN_ROUTE} component={LoginContainer} />
           <Route exact path={ACCOUNT_ROUTE} component={AccountContainer} />
           <Route exact path={REGISTER_ROUTE} component={RegisterContainer} />
-          <Route exact path={`${ROOMS_ROUTE}/:id`} component={ChatContainer} />
+          <Route exact path={`${ROOMS_ROUTE}/:id`} component={RoomContainer} />
           <Route component={NotFoundContainer} />
         </Switch>
       </Router>

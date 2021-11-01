@@ -23,7 +23,7 @@ const ChangeRoomPassword: FC = () => {
   return (
     <Container maxWidth="xs" className={styles.container}>
       <Typography
-        variant="h3"
+        variant="h4"
         component="h1"
         color="primary"
         className={styles.title}

@@ -101,7 +101,7 @@ const Rooms: FC = () => {
     <HelmetLayout title="Rooms" description="Chat rooms page">
       <Container maxWidth="sm" className={styles.container}>
         <Typography
-          variant="h3"
+          variant="h4"
           component="h1"
           color="primary"
           className={styles.title}

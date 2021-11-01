@@ -17,7 +17,7 @@ const CreateRoom: FC = () => {
     <HelmetLayout title="Create Room" description="Create room page">
       <Container maxWidth="xs" className={styles.container}>
         <Typography
-          variant="h3"
+          variant="h4"
           component="h1"
           color="primary"
           className={styles.title}

@@ -1,5 +1,5 @@
 export { default as HomeContainer } from "./Home";
-export { default as ChatContainer } from "./Chat";
+export { default as RoomContainer } from "./Room";
 export { default as LoginContainer } from "./Login";
 export { default as RoomsContainer } from "./Rooms";
 export { default as AccountContainer } from "./Account";
