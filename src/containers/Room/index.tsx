@@ -65,9 +65,6 @@ const Room: FC = () => {
       description="Room page"
       title={`Room: ${room ? room.name : ""}`}
     >
-      {!roomPassword && (
-        <RoomPasswordForm room={room} setRoomPassword={setRoomPassword} />
-      )}
       <Container maxWidth="sm" className={styles.container}>
         <Typography
           variant="h4"
@@ -87,6 +84,9 @@ const Room: FC = () => {
         )}
         {links}
         {chatDiv}
+        {!roomPassword && (
+          <RoomPasswordForm room={room} setRoomPassword={setRoomPassword} />
+        )}
       </Container>
     </HelmetLayout>
   );

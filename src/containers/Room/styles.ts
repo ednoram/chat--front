@@ -29,6 +29,9 @@ const useStyles = makeStyles({
     height: "20px !important",
     marginBottom: "-2px",
   },
+  messages_div_container: {
+    position: "relative",
+  },
   messages_div: {
     gap: "6px",
     height: "60vh",
@@ -44,8 +47,8 @@ const useStyles = makeStyles({
       width: "0.3em",
     },
     "&::-webkit-scrollbar-track": {
-      boxShadow: "inset 0 0 6px rgba(0,0,0,0.2)",
-      webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.2)",
+      boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2)",
+      webkitBoxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2)",
     },
     "&::-webkit-scrollbar-thumb": {
       backgroundColor: theme.palette.primary.main,
@@ -87,6 +90,16 @@ const useStyles = makeStyles({
   },
   more_messages_loader: {
     margin: "10px 0 !important",
+  },
+  scroll_down_button: {
+    right: "10px",
+    bottom: "5px",
+    position: "absolute",
+    boxShadow: "1px 2px 4px 0 rgb(0 0 0 / 20%)",
+    backgroundColor: theme.palette.primary.contrastText,
+    "&:hover": {
+      backgroundColor: theme.palette.primary.contrastText,
+    },
   },
   form_div: {
     gap: "8px",

@@ -1,15 +1,16 @@
 import { useState, useEffect, useRef, FC } from "react";
-import { nanoid } from "nanoid";
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { elementScrollIntoView } from "seamless-scroll-polyfill";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 import { useScrollPosition } from "src/hooks";
 import { fetchMessages } from "src/store/actions";
 import { ErrorsList, Loader } from "src/components";
-import { selectUserData, selectChatMessagesData } from "src/store/selectors";
+import { selectChatMessagesData } from "src/store/selectors";
 
 import useStyles from "./styles";
+import MessageItems from "./MessageItems";
 
 interface Props {
   roomId: string;
@@ -23,7 +24,6 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
   const [errors, setErrors] = useState<string[]>([]);
   const [divHeightCache, setDivHeightCache] = useState<number | null>(null);
 
-  const user = useSelector(selectUserData);
   const { messages, offset, limit, totalCount } = useSelector(
     selectChatMessagesData
   );
@@ -63,13 +63,26 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
   }, [scrollPosition]);
 
   useEffect(() => {
-    if (divHeightCache && messagesDivRef?.current && scrolled && !success) {
+    if (
+      divHeightCache &&
+      messagesDivRef?.current &&
+      scrolled &&
+      !success &&
+      scrollPosition !== null
+    ) {
       if (messagesDivRef.current.scrollTop < 40) {
         messagesDivRef.current.scrollTop =
           messagesDivRef.current.scrollHeight - divHeightCache - 80;
-      } else {
+      } else if (
+        scrollPosition + messagesDivRef.current.clientHeight >
+        messagesDivRef.current.scrollHeight - 200
+      ) {
         scrollToTheEnd();
       }
+    }
+
+    if (scrollPosition === null) {
+      scrollToTheEnd();
     }
 
     if (messages.length > 0 && !scrolled) {
@@ -81,52 +94,44 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
     setTimeout(() => setSuccess(false));
   }, [messages]);
 
-  const scrollToTheEnd = () => {
+  const scrollToTheEnd = (options?: ScrollIntoViewOptions) => {
     if (messagesEndRef.current) {
-      elementScrollIntoView(messagesEndRef.current, { block: "nearest" });
+      elementScrollIntoView(messagesEndRef.current, {
+        block: "nearest",
+        ...options,
+      });
     }
   };
 
-  const getMessageDate = (date: Date) =>
-    new Date(date).toLocaleTimeString("en", {
-      timeStyle: "short",
-    });
+  const scrollDownButton = roomPassword &&
+    messagesDivRef.current &&
+    scrollPosition !== null &&
+    scrollPosition + messagesDivRef.current.clientHeight <
+      messagesDivRef.current.scrollHeight - 100 && (
+      <Button
+        aria-label="scroll to the end"
+        className={styles.scroll_down_button}
+        onClick={() => scrollToTheEnd({ behavior: "smooth" })}
+      >
+        <ArrowDownwardIcon color="primary" />
+      </Button>
+    );
 
   return (
-    <div ref={messagesDivRef} className={styles.messages_div}>
-      <ErrorsList errors={errors} setErrors={setErrors} />
-      <Loader loading={loading} className={styles.more_messages_loader} />
-      {messages && messages.length > 0 ? (
-        messages.map((message) => (
-          <div
-            key={nanoid()}
-            className={[
-              styles.message_div,
-              message.username === user?.username ? styles.message_div_own : "",
-            ].join(" ")}
-          >
-            <Typography
-              className={[
-                styles.message_username,
-                message.username === user?.username
-                  ? styles.message_username_own
-                  : "",
-              ].join(" ")}
-            >
-              {message.username}
-            </Typography>
-            <Typography className={styles.message_text}>
-              {message.text}
-            </Typography>
-            <Typography className={styles.message_time}>
-              {getMessageDate(message?.createdAt)}
-            </Typography>
-          </div>
-        ))
-      ) : (
-        <Typography className={styles.no_messages_text}>No messages</Typography>
-      )}
-      <div ref={messagesEndRef} />
+    <div className={styles.messages_div_container}>
+      <div ref={messagesDivRef} className={styles.messages_div}>
+        <ErrorsList errors={errors} setErrors={setErrors} />
+        <Loader loading={loading} className={styles.more_messages_loader} />
+        {messages && messages.length > 0 ? (
+          <MessageItems messages={messages} />
+        ) : (
+          <Typography className={styles.no_messages_text}>
+            No messages
+          </Typography>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
+      {scrollDownButton}
     </div>
   );
 };
