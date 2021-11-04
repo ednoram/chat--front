@@ -27,9 +27,13 @@ import {
   DeleteAllMessagesContainer,
   ChangeRoomPasswordContainer,
 } from "src/containers";
+import {
+  removeMessage,
+  addChatMessage,
+  logInWithToken,
+} from "src/store/actions";
 import { IMessage } from "src/types";
 import { theme, useGlobalStyles } from "src/styles";
-import { addChatMessage, logInWithToken } from "src/store/actions";
 
 const App: FC = () => {
   useGlobalStyles();
@@ -42,6 +46,10 @@ const App: FC = () => {
 
   socket.on("message", (message: IMessage) => {
     dispatch(addChatMessage(message));
+  });
+
+  socket.on("delete-message", (message: IMessage) => {
+    dispatch(removeMessage(message._id));
   });
 
   useEffect(() => {

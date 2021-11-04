@@ -4,7 +4,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useParams, Link } from "react-router-dom";
 import { Typography, Container, Box } from "@material-ui/core";
 
-import { socket, ROOMS_ROUTE } from "src/constants";
+import { emitRoom } from "src/utils";
+import { ROOMS_ROUTE } from "src/constants";
 import { selectUserData } from "src/store/selectors";
 import { BackLink, HelmetLayout } from "src/components";
 import { useAuthorize, useDisableBodyScroll, useFetchRoom } from "src/hooks";
@@ -28,7 +29,7 @@ const Room: FC = () => {
 
   useEffect(() => {
     if (roomId && roomPassword) {
-      socket.emit("room", roomId, roomPassword);
+      emitRoom(roomId, roomPassword);
     }
   }, [roomId, roomPassword]);
 

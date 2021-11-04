@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box, TextField, Button } from "@material-ui/core";
 
 import { IMessage } from "src/types";
-import { socket } from "src/constants";
 import { postMessage } from "src/store/actions";
 import { selectUserData } from "src/store/selectors";
 
@@ -23,10 +22,6 @@ const Form: FC<Props> = ({ roomId }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const emitMessage = (message: IMessage) => {
-    socket.emit("message", message);
-  };
-
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
@@ -34,13 +29,14 @@ const Form: FC<Props> = ({ roomId }) => {
 
     const message: IMessage = {
       roomId,
+      _id: "",
       createdAt: new Date(),
       text: inputValue.trim(),
       username: user.username,
     };
 
     if (message.text && message.username) {
-      dispatch(postMessage(message, emitMessage, setLoading));
+      dispatch(postMessage(message, setLoading));
       setInputValue("");
     }
   };
@@ -60,9 +56,9 @@ const Form: FC<Props> = ({ roomId }) => {
         <Button
           type="submit"
           color="primary"
-          disabled={loading}
           variant="contained"
           aria-label="send message"
+          disabled={loading || !inputValue}
         >
           <SendIcon aria-label="send icon" />
         </Button>

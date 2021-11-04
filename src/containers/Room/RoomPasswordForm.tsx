@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { nanoid } from "nanoid";
+import { Backdrop } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import { IRoom } from "src/types";
@@ -114,7 +115,7 @@ const RoomPasswordForm: FC<Props> = ({ room, setRoomPassword }) => {
   );
 
   return (
-    <Box className={styles.room_password_container}>
+    <Backdrop open={!success} className={styles.room_password_backdrop}>
       <Container
         maxWidth="xs"
         component="form"
@@ -124,7 +125,7 @@ const RoomPasswordForm: FC<Props> = ({ room, setRoomPassword }) => {
         <BackLink route={ROOMS_ROUTE} text="Rooms" />
         {content}
       </Container>
-    </Box>
+    </Backdrop>
   );
 };
 

@@ -19,6 +19,7 @@ interface State {
 export interface Action {
   type: string;
   payload: {
+    id?: string;
     rooms?: IRoom[];
     message?: IMessage;
     totalCount?: number;
@@ -32,6 +33,8 @@ export const RESET_ROOMS = "RESET_ROOMS";
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const SET_MESSAGES = "SET_MESSAGES";
 export const POST_MESSAGE = "POST_MESSAGE";
+export const DELETE_MESSAGE = "DELETE_MESSAGE";
+export const REMOVE_MESSAGE = "REMOVE_MESSAGE";
 export const CREATE_CHAT_ROOM = "CREATE_CHAT_ROOM";
 export const DELETE_CHAT_ROOM = "DELETE_CHAT_ROOM";
 export const DELETE_ROOM_MESSAGES = "DELETE_ROOM_MESSAGES";
@@ -99,6 +102,19 @@ const chatReducer = (
             rooms: {
               ...state.rooms,
               rooms: [...state.rooms.rooms, ...payload.rooms],
+            },
+          }
+        : state;
+
+    case REMOVE_MESSAGE:
+      return payload.id
+        ? {
+            ...state,
+            messages: {
+              ...state.messages,
+              messages: state.messages.messages.filter(
+                (message) => message._id !== payload.id
+              ),
             },
           }
         : state;

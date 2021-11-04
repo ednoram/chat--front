@@ -123,7 +123,7 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
         <ErrorsList errors={errors} setErrors={setErrors} />
         <Loader loading={loading} className={styles.more_messages_loader} />
         {messages && messages.length > 0 ? (
-          <MessageItems messages={messages} />
+          <MessageItems messages={messages} roomPassword={roomPassword || ""} />
         ) : (
           <Typography className={styles.no_messages_text}>
             No messages

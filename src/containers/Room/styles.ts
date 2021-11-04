@@ -74,12 +74,22 @@ const useStyles = makeStyles({
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main,
   },
+  message_username_and_menu: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   message_username: {
     fontWeight: "bold",
     color: theme.palette.primary.main,
   },
   message_username_own: {
     color: theme.palette.primary.contrastText,
+  },
+  three_dots_menu: {
+    padding: "0",
+    marginRight: "-5px",
+    transform: "scale(0.9)",
   },
   message_text: {
     wordBreak: "break-word",
@@ -106,15 +116,7 @@ const useStyles = makeStyles({
     display: "flex",
     marginTop: "8px",
   },
-  room_password_container: {
-    top: "0",
-    left: "0",
-    width: "100vw",
-    height: "100vh",
-    display: "grid",
-    position: "fixed",
-    placeItems: "center",
-    background: "rgba(0, 0, 0, 0.3)",
+  room_password_backdrop: {
     padding: "0 20px",
     boxSizing: "border-box",
   },
@@ -122,7 +124,7 @@ const useStyles = makeStyles({
     background: "white",
     borderRadius: "8px",
     marginBottom: "50px",
-    padding: "16px 20px",
+    padding: "16px",
   },
   room_password_name: {
     textAlign: "center",

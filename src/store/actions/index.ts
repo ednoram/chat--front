@@ -11,6 +11,8 @@ export {
   postMessage,
   postChatRoom,
   fetchMessages,
+  deleteMessage,
+  removeMessage,
   resetChatRooms,
   addChatMessage,
   fetchChatRooms,
