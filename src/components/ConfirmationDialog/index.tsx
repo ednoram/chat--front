@@ -5,10 +5,8 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
-  useMediaQuery,
   DialogContentText,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 
 interface Props {
   title: string;
@@ -25,9 +23,6 @@ const ConfirmationDialog: FC<Props> = ({
   contentText,
   setConfirmed,
 }) => {
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-
   const handleClose = () => setIsOpen(false);
 
   const handleConfirm = () => {
@@ -39,7 +34,6 @@ const ConfirmationDialog: FC<Props> = ({
     <Dialog
       open={isOpen}
       onClose={handleClose}
-      fullScreen={fullScreen}
       aria-labelledby="responsive-dialog-title"
     >
       <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>

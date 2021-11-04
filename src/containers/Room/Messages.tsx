@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, FC } from "react";
 import { Button, Typography } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { elementScrollIntoView } from "seamless-scroll-polyfill";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 
 import { useScrollPosition } from "src/hooks";
 import { fetchMessages } from "src/store/actions";

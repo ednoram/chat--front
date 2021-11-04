@@ -135,7 +135,7 @@ const useStyles = makeStyles({
   },
   room_password_submit: {
     width: "100%",
-    marginTop: "16px",
+    marginTop: "10px",
     padding: "10px 20px",
   },
 });

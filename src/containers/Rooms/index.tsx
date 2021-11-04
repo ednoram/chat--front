@@ -77,12 +77,13 @@ const Rooms: FC = () => {
     (rooms.length > 0 ? (
       <List>
         {rooms.map((room) => (
-          <ListItemButton
-            key={nanoid()}
-            onClick={() => history.push(`${ROOMS_ROUTE}/${room._id}`)}
-          >
-            <Typography>{room.name}</Typography>
-          </ListItemButton>
+          <li key={nanoid()}>
+            <ListItemButton
+              onClick={() => history.push(`${ROOMS_ROUTE}/${room._id}`)}
+            >
+              <Typography>{room.name}</Typography>
+            </ListItemButton>
+          </li>
         ))}
       </List>
     ) : (

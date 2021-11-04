@@ -34,7 +34,13 @@ const useStyles = makeStyles({
   },
   link: {
     color: "black",
+    display: "block",
+    transition: "0.2s",
     textDecoration: "none",
+    "&:hover": {
+      opacity: "0.6",
+      transform: "scale(1.1)",
+    },
   },
 });
 

@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   links_container: {
     gap: "20px",
     display: "flex",
-    marginTop: "20px",
+    marginTop: "28px",
     flexDirection: "column",
   },
   change_password_link: {
