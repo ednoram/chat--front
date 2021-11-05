@@ -1,0 +1,25 @@
+.container {
+  margin: 70px auto 140px;
+}
+
+.title {
+  text-align: center;
+}
+
+.username {
+  text-align: center;
+}
+
+.back_link_container {
+  margin-top: 20px;
+}
+
+.form_heading {
+  text-align: center;
+  margin-top: 20px !important;
+}
+
+.submit_form_button {
+  margin-top: 20px !important;
+  padding: 10px 20px !important;
+}

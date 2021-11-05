@@ -6,7 +6,7 @@ import { ThreeDotsMenu } from "src/components";
 import { deleteMessage } from "src/store/actions";
 import { selectUserData } from "src/store/selectors";
 
-import useStyles from "./styles";
+import styles from "./Room.module.css";
 
 interface Props {
   message: IMessage;
@@ -15,7 +15,6 @@ interface Props {
 }
 
 const MessageMenu: FC<Props> = ({ message, roomPassword, setLoading }) => {
-  const styles = useStyles();
   const dispatch = useDispatch();
   const user = useSelector(selectUserData);
 

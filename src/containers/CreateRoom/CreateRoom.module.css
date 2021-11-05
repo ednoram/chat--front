@@ -1,0 +1,21 @@
+.container {
+  margin: 70px auto 140px;
+}
+
+.title {
+  text-align: center;
+}
+
+.rooms_link_container {
+  margin-top: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.submit_button {
+  padding: 8px 0 !important;
+  margin-top: 16px !important;
+}

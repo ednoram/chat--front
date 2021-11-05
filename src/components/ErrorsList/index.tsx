@@ -2,7 +2,7 @@ import { FC, Dispatch, SetStateAction } from "react";
 import { nanoid } from "nanoid";
 import { Alert, Box } from "@mui/material";
 
-import useStyles from "./styles";
+import styles from "./ErrorsList.module.css";
 
 interface Props {
   errors: string[];
@@ -10,8 +10,6 @@ interface Props {
 }
 
 const ErrorsList: FC<Props> = ({ errors, setErrors }) => {
-  const styles = useStyles();
-
   return errors.length > 0 ? (
     <Box className={styles.list}>
       {errors.length > 0 &&

@@ -1,5 +1,4 @@
-import { createTheme } from "@material-ui/core";
-import { cyan, pink } from "@mui/material/colors";
+import { createTheme } from "@mui/material";
 
 const theme = createTheme({
   typography: {
@@ -7,11 +6,11 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: cyan[800],
+      main: "#00838f",
       contrastText: "white",
     },
     secondary: {
-      main: pink[600],
+      main: "#d81b60",
       contrastText: "white",
     },
   },

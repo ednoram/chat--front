@@ -1,19 +1,18 @@
 import { useState, FC, FormEvent } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
-import { Box, TextField, Button } from "@material-ui/core";
+import { Box, TextField, Button } from "@mui/material";
 
 import { postChatRoom } from "src/store/actions";
 import { ErrorsList, Loader } from "src/components";
 
-import useStyles from "./styles";
+import styles from "./CreateRoom.module.css";
 
 const Form: FC = () => {
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [passwordValue, setPasswordValue] = useState("");
 
-  const styles = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -43,6 +42,7 @@ const Form: FC = () => {
         name="name"
         margin="normal"
         label="Room Name"
+        variant="standard"
         autoComplete="off"
         inputProps={{ maxLength: 100 }}
       />
@@ -52,6 +52,7 @@ const Form: FC = () => {
         margin="normal"
         type="password"
         name="password"
+        variant="standard"
         autoComplete="off"
         label="Room Password"
         value={passwordValue}

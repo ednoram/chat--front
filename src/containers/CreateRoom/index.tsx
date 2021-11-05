@@ -1,16 +1,14 @@
 import { FC } from "react";
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@mui/material";
 
 import { useAuthorize } from "src/hooks";
 import { ROOMS_ROUTE } from "src/constants";
 import { BackLink, HelmetLayout } from "src/components";
 
 import Form from "./Form";
-import useStyles from "./styles";
+import styles from "./CreateRoom.module.css";
 
 const CreateRoom: FC = () => {
-  const styles = useStyles();
-
   useAuthorize();
 
   return (

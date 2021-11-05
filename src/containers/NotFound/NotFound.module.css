@@ -1,0 +1,6 @@
+.container {
+  height: 80vh;
+  display: grid;
+  text-align: center;
+  place-items: center;
+}

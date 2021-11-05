@@ -1,11 +1,17 @@
 import { useState, useEffect, FC } from "react";
+import {
+  Box,
+  List,
+  Button,
+  Container,
+  Typography,
+  ListItemButton,
+} from "@mui/material";
 import { nanoid } from "nanoid";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Link, useHistory } from "react-router-dom";
-import { List, ListItemButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Box, Button, Container, Typography } from "@material-ui/core";
 
 import {
   fetchChatRooms,
@@ -18,13 +24,12 @@ import { selectChatRoomsData } from "src/store/selectors";
 import { CREATE_ROOM_ROUTE, ROOMS_ROUTE } from "src/constants";
 import { BackLink, HelmetLayout, Loader } from "src/components";
 
-import useStyles from "./styles";
 import Searchbox from "./Searchbox";
+import styles from "./Rooms.module.css";
 
 const Rooms: FC = () => {
   const [loadingRooms, setLoadingRooms] = useState(false);
 
-  const styles = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -56,7 +61,11 @@ const Rooms: FC = () => {
       <BackLink route="/" text="Home" />
       <Typography>
         <Link to={CREATE_ROOM_ROUTE} className={styles.create_room_link}>
-          <AddCircleIcon className={styles.create_room_link_icon} /> Create Room
+          <AddCircleIcon
+            color="primary"
+            className={styles.create_room_link_icon}
+          />{" "}
+          Create Room
         </Link>
       </Typography>
     </Box>
@@ -66,6 +75,7 @@ const Rooms: FC = () => {
     <Typography>
       Showing matches for {`"${searchFilter}"`}
       <ClearIcon
+        color="secondary"
         onClick={() => clearSearchFilter()}
         className={styles.clear_search_filter_icon}
       />

@@ -2,7 +2,7 @@ import { useState, useEffect, FC } from "react";
 import { useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import { useParams, Link } from "react-router-dom";
-import { Typography, Container, Box } from "@material-ui/core";
+import { Typography, Container, Box } from "@mui/material";
 
 import { emitRoom } from "src/utils";
 import { ROOMS_ROUTE } from "src/constants";
@@ -11,14 +11,13 @@ import { BackLink, HelmetLayout } from "src/components";
 import { useAuthorize, useDisableBodyScroll, useFetchRoom } from "src/hooks";
 
 import Form from "./Form";
-import useStyles from "./styles";
 import Messages from "./Messages";
+import styles from "./Room.module.css";
 import RoomPasswordForm from "./RoomPasswordForm";
 
 const Room: FC = () => {
   const [roomPassword, setRoomPassword] = useState<string | null>(null);
 
-  const styles = useStyles();
   const user = useSelector(selectUserData);
   const { id: roomId }: { id: string } = useParams();
 

@@ -1,12 +1,12 @@
 import { useState, FC, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Box, Button, TextField } from "@material-ui/core";
+import { Box, Button, TextField } from "@mui/material";
 
 import { ErrorsList, Loader } from "src/components";
 import { changeRoomPassword } from "src/store/actions";
 
-import useStyles from "./styles";
+import styles from "./ChangeRoomPassword.module.css";
 
 interface Props {
   roomId: string;
@@ -19,7 +19,6 @@ const ChangePasswordForm: FC<Props> = ({ roomId, chatRoute }) => {
   const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const styles = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -52,6 +51,7 @@ const ChangePasswordForm: FC<Props> = ({ roomId, chatRoute }) => {
         type="password"
         margin="normal"
         value={password}
+        variant="standard"
         autoComplete="off"
         label="Current Password"
         onChange={(e) => setPassword(e.target.value.trim())}
@@ -61,6 +61,7 @@ const ChangePasswordForm: FC<Props> = ({ roomId, chatRoute }) => {
         fullWidth
         type="password"
         margin="normal"
+        variant="standard"
         autoComplete="off"
         value={newPassword}
         label="New Password"

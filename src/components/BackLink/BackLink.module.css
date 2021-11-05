@@ -1,0 +1,10 @@
+.link {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.arrow_icon {
+  margin: 0 -6px -3px 0;
+  width: 20px !important;
+  height: 17px !important;
+}

@@ -2,17 +2,16 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Button, Container, Typography } from "@material-ui/core";
+import { Box, Button, Container, Typography } from "@mui/material";
 
 import { logOut } from "src/store/actions";
 import { selectUserData } from "src/store/selectors";
 import { HelmetLayout, BackLink, Loader } from "src/components";
 import { EDIT_ACCOUNT_ROUTE, LOGIN_ROUTE } from "src/constants";
 
-import useStyles from "./styles";
+import styles from "./Account.module.css";
 
 const Account: FC = () => {
-  const styles = useStyles();
   const dispatch = useDispatch();
   const user = useSelector(selectUserData);
 

@@ -1,0 +1,11 @@
+.button {
+  padding: 0 !important;
+}
+
+.menu {
+  max-height: calc(36 * 4.5);
+}
+
+.list_item_icon {
+  min-width: 36px;
+}

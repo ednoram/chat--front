@@ -1,0 +1,36 @@
+.container {
+  margin: 70px auto 120px;
+}
+
+.title {
+  text-align: center;
+}
+
+.links_div {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.edit_link {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.edit_link_icon {
+  margin-bottom: -2px;
+  height: 20px !important;
+}
+
+.user_info {
+  margin-top: 20px;
+}
+
+.logout_button_container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.logout_button {
+  margin-top: 20px !important;
+}

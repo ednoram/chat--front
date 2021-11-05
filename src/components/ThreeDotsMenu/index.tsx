@@ -5,14 +5,14 @@ import {
   Menu,
   MenuItem,
   IconButton,
+  Typography,
   ListItemText,
   ListItemIcon,
-  Typography,
-} from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+} from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-import useStyles from "./styles";
+import styles from "./ThreeDotsMenu.module.css";
 
 interface IItem {
   text: string;
@@ -28,7 +28,6 @@ interface Props {
 
 const ThreeDotsMenu: FC<Props> = ({ items, color, className }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const styles = useStyles();
 
   const open = Boolean(anchorEl);
 

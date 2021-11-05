@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress } from "@mui/material";
 
-import useStyles from "./styles";
+import styles from "./Loader.module.css";
 
 interface Props {
   loading: boolean;
@@ -10,8 +10,6 @@ interface Props {
 }
 
 const Loader: FC<Props> = ({ loading, type, className }) => {
-  const styles = useStyles();
-
   const containerClassNames = [
     className,
     styles.loader_container,

@@ -1,0 +1,162 @@
+.container {
+  margin: 60px auto 100px;
+}
+
+.title {
+  text-align: center;
+}
+
+.room_name {
+  text-align: center;
+}
+
+.admin_text {
+  text-align: center;
+}
+
+.links_container {
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-between;
+}
+
+.edit_room_link {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.edit_room_icon {
+  height: 20px !important;
+  margin-bottom: -2px;
+}
+
+.messages_div_container {
+  position: relative;
+}
+
+.messages_div {
+  gap: 6px;
+  height: 60vh;
+  display: flex;
+  padding: 0 8px;
+  margin-top: 20px;
+  min-height: 400px;
+  max-height: 700px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex-direction: column;
+}
+
+.messages_div::-webkit-scrollbar {
+  width: 0.3em;
+}
+
+.messages_div::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0 0 0 0.2);
+  -webkit-box-shadow: inset 0 0 6px rgba(0 0 0 0.2);
+}
+
+.messages_div::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+}
+
+.no_messages_text {
+  text-align: center;
+  margin-top: 10px !important;
+}
+
+.message_div {
+  max-width: 80%;
+  min-width: 10%;
+  margin-left: 0;
+  margin-right: auto;
+  border-radius: 8px;
+  padding: 6px 10px;
+  background-color: white;
+  box-shadow: 1px 2px 4px 0 rgb(0 0 0 / 20%);
+}
+
+.message_div_own {
+  color: white;
+  margin-right: 0;
+  margin-left: auto;
+  background-color: var(--primary-color);
+}
+
+.message_username_and_menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.message_username {
+  font-weight: bold !important;
+  color: var(--primary-color);
+}
+
+.message_username_own {
+  color: white;
+}
+
+.three_dots_menu {
+  padding: 0 !important;
+  transform: scale(0.9);
+  margin-right: -5px !important;
+}
+
+.message_text {
+  word-break: break-word;
+}
+
+.message_time {
+  text-align: right;
+  font-size: 0.75rem !important;
+}
+
+.more_messages_loader {
+  margin: 10px 0 !important;
+}
+
+.scroll_down_button {
+  right: 10px;
+  bottom: 5px;
+  position: absolute !important;
+  background-color: white !important;
+  box-shadow: 1px 2px 4px 0 rgb(0 0 0 / 20%);
+}
+
+.form_div {
+  gap: 8px;
+  display: flex;
+  margin-top: 8px;
+}
+
+.room_password_backdrop {
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.room_password_form {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 50px;
+  background: white;
+}
+
+.room_password_name {
+  text-align: center;
+}
+
+.room_password_form_loader {
+  margin-bottom: 80px;
+}
+
+.room_password_error {
+  padding-left: 4px;
+}
+
+.room_password_submit {
+  width: 100%;
+  margin-top: 10px !important;
+  padding: 10px 20px !important;
+}

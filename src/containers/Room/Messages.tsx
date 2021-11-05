@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef, FC } from "react";
-import { Button, Typography } from "@material-ui/core";
+import { Button, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { elementScrollIntoView } from "seamless-scroll-polyfill";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 import { useScrollPosition } from "src/hooks";
 import { fetchMessages } from "src/store/actions";
 import { ErrorsList, Loader } from "src/components";
 import { selectChatMessagesData } from "src/store/selectors";
 
-import useStyles from "./styles";
+import styles from "./Room.module.css";
 import MessageItems from "./MessageItems";
 
 interface Props {
@@ -31,7 +31,6 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
   const messagesDivRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const styles = useStyles();
   const dispatch = useDispatch();
   const scrollPosition = useScrollPosition(messagesDivRef);
 
@@ -120,8 +119,8 @@ const Messages: FC<Props> = ({ roomId, roomPassword }) => {
   return (
     <div className={styles.messages_div_container}>
       <div ref={messagesDivRef} className={styles.messages_div}>
-        <ErrorsList errors={errors} setErrors={setErrors} />
         <Loader loading={loading} className={styles.more_messages_loader} />
+        <ErrorsList errors={errors} setErrors={setErrors} />
         {messages && messages.length > 0 ? (
           <MessageItems messages={messages} roomPassword={roomPassword || ""} />
         ) : (

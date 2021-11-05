@@ -9,12 +9,12 @@ import {
 import {
   Box,
   Button,
+  Backdrop,
   Container,
   TextField,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { nanoid } from "nanoid";
-import { Backdrop } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import { IRoom } from "src/types";
@@ -23,7 +23,7 @@ import { fetchMessages } from "src/store/actions";
 import { BackLink, Loader } from "src/components";
 import { selectChatMessagesData } from "src/store/selectors";
 
-import useStyles from "./styles";
+import styles from "./Room.module.css";
 
 interface Props {
   room: IRoom | null;
@@ -36,14 +36,19 @@ const RoomPasswordForm: FC<Props> = ({ room, setRoomPassword }) => {
   const [inputValue, setInputValue] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
 
-  const styles = useStyles();
   const dispatch = useDispatch();
 
   const { limit, offset } = useSelector(selectChatMessagesData);
 
   useEffect(() => {
     if (success) {
-      setRoomPassword(inputValue);
+      const timer = setTimeout(() => {
+        setRoomPassword(inputValue);
+      });
+
+      return () => {
+        clearTimeout(timer);
+      };
     }
   }, [success]);
 

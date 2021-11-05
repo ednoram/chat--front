@@ -1,0 +1,14 @@
+.loader_container {
+  display: flex;
+  margin-top: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.form_loader_container {
+  margin-top: 24px !important;
+}
+
+.list_loader_container {
+  margin-top: 0 !important;
+}

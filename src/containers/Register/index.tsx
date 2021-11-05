@@ -1,16 +1,14 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { Typography, Container } from "@material-ui/core";
+import { Typography, Container } from "@mui/material";
 
 import { useAuthorize } from "src/hooks";
 import { LOGIN_ROUTE } from "src/constants";
 import { AuthForm, HelmetLayout } from "src/components";
 
-import useStyles from "./styles";
+import styles from "./Register.module.css";
 
 const Register: FC = () => {
-  const styles = useStyles();
-
   useAuthorize({ reverse: true });
 
   return (

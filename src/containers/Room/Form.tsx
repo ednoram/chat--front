@@ -1,14 +1,14 @@
 import { useState, FC, FormEvent } from "react";
 import { LoadingButton } from "@mui/lab";
+import { Box, TextField } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { Box, TextField } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 
 import { IMessage } from "src/types";
 import { postMessage } from "src/store/actions";
 import { selectUserData } from "src/store/selectors";
 
-import useStyles from "./styles";
+import styles from "./Room.module.css";
 
 interface Props {
   roomId: string;
@@ -18,10 +18,8 @@ const Form: FC<Props> = ({ roomId }) => {
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
-  const user = useSelector(selectUserData);
-
-  const styles = useStyles();
   const dispatch = useDispatch();
+  const user = useSelector(selectUserData);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();

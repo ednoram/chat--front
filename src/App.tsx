@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { ThemeProvider } from "@material-ui/styles";
+import { ThemeProvider } from "@mui/material";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 import {
@@ -32,12 +32,11 @@ import {
   addChatMessage,
   logInWithToken,
 } from "src/store/actions";
+import "src/styles/globals.css";
+import { theme } from "src/styles";
 import { IMessage } from "src/types";
-import { theme, useGlobalStyles } from "src/styles";
 
 const App: FC = () => {
-  useGlobalStyles();
-
   const dispatch = useDispatch();
 
   socket.on("connect_error", (err) => {

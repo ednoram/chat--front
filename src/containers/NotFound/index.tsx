@@ -1,13 +1,11 @@
 import { FC } from "react";
-import { Container, Typography } from "@material-ui/core";
+import { Container, Typography } from "@mui/material";
 
 import { HelmetLayout } from "src/components";
 
-import useStyles from "./styles";
+import styles from "./NotFound.module.css";
 
 const NotFound: FC = () => {
-  const styles = useStyles();
-
   return (
     <HelmetLayout title="404 | Page Not Found" description="Page not found">
       <Container maxWidth="xs" className={styles.container}>

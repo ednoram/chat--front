@@ -1,0 +1,49 @@
+.container {
+  margin: 70px auto 140px;
+}
+
+.title {
+  text-align: center;
+}
+
+.links_container {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.create_room_link {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.create_room_link_icon {
+  margin: 0 -2px -5px 0;
+  height: 22px !important;
+}
+
+.searchbox {
+  gap: 6px;
+  display: grid;
+  grid-template-columns: auto 70px;
+}
+
+.searchbox_button {
+  margin: 16px 0 8px !important;
+}
+
+.clear_search_filter_icon {
+  cursor: pointer;
+  padding-left: 3px;
+  margin-bottom: -7px;
+}
+
+.no_rooms_text {
+  text-align: center;
+  margin-top: 28px !important;
+}
+
+.show_more_button_container {
+  display: flex;
+  justify-content: center;
+}

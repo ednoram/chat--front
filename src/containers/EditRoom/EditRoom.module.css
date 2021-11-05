@@ -1,0 +1,32 @@
+.container {
+  margin: 70px auto 140px;
+}
+
+.title {
+  text-align: center;
+}
+
+.room_name {
+  text-align: center;
+}
+
+.back_link_container {
+  margin-top: 20px;
+}
+
+.links_container {
+  gap: 20px;
+  display: flex;
+  margin-top: 28px;
+  flex-direction: column;
+}
+
+.change_password_link {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.delete_link {
+  text-decoration: none;
+  color: var(--secondary-color);
+}

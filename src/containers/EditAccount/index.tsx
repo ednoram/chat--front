@@ -1,16 +1,15 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@mui/material";
 
 import { ACCOUNT_ROUTE } from "src/constants";
 import { selectUserData } from "src/store/selectors";
 import { HelmetLayout, BackLink } from "src/components";
 
 import Form from "./Form";
-import useStyles from "./styles";
+import styles from "./EditAccount.module.css";
 
 const EditAccount: FC = () => {
-  const styles = useStyles();
   const user = useSelector(selectUserData);
 
   return (

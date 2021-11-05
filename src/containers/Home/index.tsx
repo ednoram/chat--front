@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Typography, Container, List, ListItem } from "@material-ui/core";
+import { Typography, Container, List, ListItem } from "@mui/material";
 
 import { useAuthorize } from "src/hooks";
 import { HelmetLayout, Loader } from "src/components";
@@ -9,10 +9,9 @@ import { selectUserData } from "src/store/selectors";
 import { ACCOUNT_ROUTE, ROOMS_ROUTE } from "src/constants";
 import { ReactComponent as Logo } from "src/assets/logo.svg";
 
-import useStyles from "./styles";
+import styles from "./Home.module.css";
 
 const Home: FC = () => {
-  const styles = useStyles();
   const user = useSelector(selectUserData);
 
   useAuthorize();

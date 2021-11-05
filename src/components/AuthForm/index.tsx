@@ -1,13 +1,13 @@
 import { useState, FormEvent, FC } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Box, TextField, Button } from "@material-ui/core";
+import { Box, TextField, Button } from "@mui/material";
 
 import { LOGIN_ROUTE } from "src/constants";
 import { logIn, register } from "src/store/actions";
 import { ErrorsList, Loader } from "src/components";
 
-import useStyles from "./styles";
+import styles from "./AuthForm.module.css";
 
 interface Props {
   type: "login" | "register";
@@ -18,7 +18,6 @@ const AuthForm: FC<Props> = ({ type }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [passwordValue, setPasswordValue] = useState("");
 
-  const styles = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -70,6 +69,7 @@ const AuthForm: FC<Props> = ({ type }) => {
         name="username"
         margin="normal"
         label="Username"
+        variant="standard"
         autoComplete="login-username"
       />
       <TextField
@@ -79,6 +79,7 @@ const AuthForm: FC<Props> = ({ type }) => {
         type="password"
         margin="normal"
         label="Password"
+        variant="standard"
         autoComplete="off"
         value={passwordValue}
         onChange={(e) => setPasswordValue(e.target.value.trim())}
@@ -89,6 +90,7 @@ const AuthForm: FC<Props> = ({ type }) => {
           fullWidth
           type="password"
           margin="normal"
+          variant="standard"
           autoComplete="off"
           label="Confirm Password"
           name="password-confirmation"

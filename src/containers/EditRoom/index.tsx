@@ -1,15 +1,14 @@
 import { FC } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@mui/material";
 
 import { ROOMS_ROUTE } from "src/constants";
 import { BackLink, HelmetLayout } from "src/components";
 import { useAuthorize, useFetchRoom, useRestrictEditingRoom } from "src/hooks";
 
-import useStyles from "./styles";
+import styles from "./EditRoom.module.css";
 
 const EditRoom: FC = () => {
-  const styles = useStyles();
   const { id: roomId }: { id: string } = useParams();
 
   const room = useFetchRoom(roomId);

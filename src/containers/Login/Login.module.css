@@ -1,0 +1,15 @@
+.container {
+  margin: 90px auto 140px;
+}
+
+.title {
+  text-align: center;
+}
+
+.register_link_text {
+  margin-top: 20px !important;
+}
+
+.register_link {
+  color: var(--primary-color);
+}

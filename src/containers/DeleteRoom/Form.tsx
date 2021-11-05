@@ -1,12 +1,12 @@
 import { useState, useEffect, FC, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Box, Button, TextField } from "@material-ui/core";
+import { Box, Button, TextField } from "@mui/material";
 
 import { deleteRoom } from "src/store/actions";
 import { ErrorsList, ConfirmationDialog, Loader } from "src/components";
 
-import useStyles from "./styles";
+import styles from "./DeleteRoom.module.css";
 
 interface Props {
   roomId: string;
@@ -20,7 +20,6 @@ const Form: FC<Props> = ({ roomId, chatRoute }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
-  const styles = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -67,6 +66,7 @@ const Form: FC<Props> = ({ roomId, chatRoute }) => {
         type="password"
         margin="normal"
         label="Password"
+        variant="standard"
         autoComplete="off"
         value={roomPassword}
         onChange={(e) => setRoomPassword(e.target.value.trim())}

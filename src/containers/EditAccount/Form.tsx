@@ -1,12 +1,12 @@
 import { useState, FC, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Box, Button, TextField, Typography } from "@material-ui/core";
+import { Box, Button, TextField, Typography } from "@mui/material";
 
 import { ErrorsList, Loader } from "src/components";
 import { changeUserPassword } from "src/store/actions";
 
-import useStyles from "./styles";
+import styles from "./EditAccount.module.css";
 
 const Form: FC = () => {
   const [errors, setErrors] = useState<string[]>([]);
@@ -15,7 +15,6 @@ const Form: FC = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const styles = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -56,8 +55,9 @@ const Form: FC = () => {
         autoFocus
         type="password"
         margin="normal"
-        value={currentPassword}
+        variant="standard"
         autoComplete="off"
+        value={currentPassword}
         label="Current Password"
         onChange={(e) => setCurrentPassword(e.target.value.trim())}
       />
@@ -66,6 +66,7 @@ const Form: FC = () => {
         fullWidth
         type="password"
         margin="normal"
+        variant="standard"
         autoComplete="off"
         value={newPassword}
         label="New Password"
@@ -76,6 +77,7 @@ const Form: FC = () => {
         fullWidth
         type="password"
         margin="normal"
+        variant="standard"
         autoComplete="off"
         value={passwordConfirmation}
         label="Confirm New Password"

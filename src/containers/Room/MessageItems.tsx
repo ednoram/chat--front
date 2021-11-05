@@ -1,13 +1,12 @@
 import { useState, FC } from "react";
 import { nanoid } from "nanoid";
 import { useSelector } from "react-redux";
-import { Typography } from "@material-ui/core";
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Typography, Backdrop, CircularProgress } from "@mui/material";
 
 import { IMessage } from "src/types";
 import { selectUserData } from "src/store/selectors";
 
-import useStyles from "./styles";
+import styles from "./Room.module.css";
 import MessageMenu from "./MessageMenu";
 
 interface Props {
@@ -18,7 +17,6 @@ interface Props {
 const MessageItems: FC<Props> = ({ messages, roomPassword }) => {
   const [loading, setLoading] = useState(false);
 
-  const styles = useStyles();
   const user = useSelector(selectUserData);
 
   const getMessageDate = (date: Date) =>

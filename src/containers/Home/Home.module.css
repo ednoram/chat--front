@@ -1,0 +1,46 @@
+.container {
+  margin: 90px auto 140px;
+}
+
+.logo_and_title {
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  transform: scale(0.8);
+}
+
+.title {
+  padding-bottom: 10px;
+}
+
+.username_text {
+  text-align: center;
+}
+
+.links_list {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px !important;
+}
+
+.links_list_item {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.link {
+  color: black;
+  display: block;
+  transition: 0.2s;
+  text-decoration: none;
+}
+
+.link:hover {
+  opacity: 0.6;
+  transform: scale(1.1);
+}

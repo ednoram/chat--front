@@ -1,16 +1,15 @@
 import { useState, FC, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, TextField, Button } from "@material-ui/core";
+import { Box, TextField, Button } from "@mui/material";
 
 import { setRoomsSearchFilter } from "src/store/actions";
 
-import useStyles from "./styles";
+import styles from "./Rooms.module.css";
 
 const Searchbox: FC = () => {
   const [inputValue, setInputValue] = useState("");
 
-  const styles = useStyles();
   const dispatch = useDispatch();
 
   const handleSubmit = (event: FormEvent) => {

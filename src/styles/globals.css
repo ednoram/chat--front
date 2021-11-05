@@ -1,0 +1,12 @@
+:root {
+  --primary-color: #00838f;
+  --secondary-color: #d81b60;
+}
+
+body {
+  margin: 0;
+}
+
+h1 {
+  font-weight: bold !important;
+}
