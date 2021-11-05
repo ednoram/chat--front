@@ -1,7 +1,8 @@
 import { useState, FC, FormEvent } from "react";
+import { LoadingButton } from "@mui/lab";
 import SendIcon from "@mui/icons-material/Send";
+import { Box, TextField } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, TextField, Button } from "@material-ui/core";
 
 import { IMessage } from "src/types";
 import { postMessage } from "src/store/actions";
@@ -53,15 +54,16 @@ const Form: FC<Props> = ({ roomId }) => {
           inputProps={{ maxLength: 800 }}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <Button
+        <LoadingButton
           type="submit"
           color="primary"
+          loading={loading}
           variant="contained"
           aria-label="send message"
           disabled={loading || !inputValue}
         >
           <SendIcon aria-label="send icon" />
-        </Button>
+        </LoadingButton>
       </Box>
     </Box>
   );

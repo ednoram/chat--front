@@ -62,10 +62,7 @@ const Room: FC = () => {
   );
 
   return (
-    <HelmetLayout
-      description="Room page"
-      title={`Room: ${room ? room.name : ""}`}
-    >
+    <HelmetLayout description="Room page" title={`${room ? room.name : ""}`}>
       <Container maxWidth="sm" className={styles.container}>
         <Typography
           variant="h4"
